@@ -1,0 +1,194 @@
+/* ==================== 用户页 - 温暖水彩美食风 ==================== */
+
+.page-container {
+  background: var(--color-bg-page);
+  min-height: 100vh;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  padding: 44rpx 32rpx;
+  margin-bottom: 28rpx;
+}
+
+.user-avatar {
+  margin-right: 24rpx;
+}
+
+.avatar {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFECD2 0%, #F0A060 100%);
+  box-shadow: var(--shadow-md);
+}
+
+.avatar-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFECD2 0%, #F0A060 100%);
+  font-size: 64rpx;
+  box-shadow: var(--shadow-md);
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  font-size: var(--font-size-xxl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 14rpx;
+}
+
+.user-stats {
+  display: flex;
+  gap: 16rpx;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* 功能菜单 */
+.menu-section {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  margin-bottom: 28rpx;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-left: 24rpx;
+  margin-right: 24rpx;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx 32rpx;
+  border-bottom: 1rpx solid var(--color-divider);
+  transition: background 0.15s ease;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item:active {
+  background: #FFF9F3;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  font-size: 38rpx;
+  margin-right: 20rpx;
+  opacity: 0.65;
+  display: flex;
+  align-items: center;
+}
+
+.menu-text {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-primary);
+}
+
+.menu-arrow {
+  font-size: 32rpx;
+  color: #ccc;
+  font-weight: 300;
+}
+
+/* 快捷操作 */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+  padding: 0 24rpx;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32rpx 20rpx;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  border: 2rpx solid var(--color-border);
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.action-btn:active {
+  background: #FFF9F3;
+  border-color: var(--color-primary-light);
+  transform: scale(0.98);
+}
+
+.action-icon {
+  font-size: 48rpx;
+  margin-bottom: 16rpx;
+  opacity: 0.6;
+}
+
+.action-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* 版本信息 */
+.version-info {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+}
+
+.update-badge {
+  display: inline-block;
+  background: #FFF0E8;
+  color: var(--color-primary);
+  padding: 4rpx 14rpx;
+  border-radius: var(--radius-capsule);
+  font-size: var(--font-size-xs);
+  margin-left: 12rpx;
+  font-weight: 500;
+}
+
+/* 开发者信息 */
+.developer-info {
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-placeholder);
+  padding: 20rpx;
+}
+
+/* 响应式调整 */
+@media (min-width: 768px) {
+  .user-info {
+    padding: 56rpx 44rpx;
+  }
+
+  .avatar {
+    width: 148rpx;
+    height: 148rpx;
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .action-btn {
+    padding: 40rpx 30rpx;
+  }
+}

@@ -1,0 +1,62 @@
+# MemoryDay 本地开发环境配置（简化版）
+version: '3.8'
+
+services:
+  # 后端API服务（开发模式）
+  backend:
+    build: ./backend
+    container_name: memoryday-backend-dev
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./backend/.env:/app/.env:ro
+    environment:
+      - DJANGO_SETTINGS_MODULE=memoryday_backend.settings.development
+      - DEPLOYMENT_MODE=local-dev
+      - DJANGO_DEBUG=True
+    depends_on:
+      - db
+      - redis
+    networks:
+      - memoryday-network
+    command: python manage.py runserver 0.0.0.0:8000
+
+  # MySQL数据库服务
+  db:
+    image: mysql:8.0
+    container_name: memoryday-db-dev
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-memoryday}
+      MYSQL_USER: ${MYSQL_USER:-memoryday_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-memoryday_password}
+    volumes:
+      - db_data_dev:/var/lib/mysql
+    networks:
+      - memoryday-network
+    command: --default-authentication-plugin=mysql_native_password
+
+  # Redis缓存服务
+  redis:
+    image: redis:7-alpine
+    container_name: memoryday-redis-dev
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data_dev:/data
+    networks:
+      - memoryday-network
+
+volumes:
+  db_data_dev:
+  redis_data_dev:
+
+networks:
+  memoryday-network:
+    driver: bridge

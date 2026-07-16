@@ -1,0 +1,5 @@
+<web-view wx:if="{{url}}" src="{{url}}"></web-view>
+<view wx:else class="error-page">
+  <text class="error-icon">🔗</text>
+  <text class="error-text">无效的链接地址</text>
+</view>

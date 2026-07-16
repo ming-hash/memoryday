@@ -1,0 +1,104 @@
+# MemoryDay 全栈本地部署配置
+version: '3.8'
+
+services:
+  # 后端API服务
+  backend:
+    build: ./backend
+    container_name: memoryday-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/logs:/app/logs
+      - ./backend/static:/app/static
+      - ./backend/media:/app/media
+      - ./backend/.env:/app/.env:ro
+    environment:
+      - DJANGO_SETTINGS_MODULE=memoryday_backend.settings.production
+      - DEPLOYMENT_MODE=local
+    depends_on:
+      - db
+      - redis
+    networks:
+      - memoryday-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # MySQL数据库服务
+  db:
+    image: mysql:8.0
+    container_name: memoryday-db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-memoryday}
+      MYSQL_USER: ${MYSQL_USER:-memoryday_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-memoryday_password}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./backend/docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - memoryday-network
+    command: --default-authentication-plugin=mysql_native_password
+
+  # Redis缓存服务
+  redis:
+    image: redis:7-alpine
+    container_name: memoryday-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - memoryday-network
+    command: redis-server --appendonly yes
+
+  # Nginx反向代理（可选，用于生产环境）
+  nginx:
+    image: nginx:1.21-alpine
+    container_name: memoryday-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./backend/docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./backend/docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./backend/static:/app/static:ro
+      - ./backend/media:/app/media:ro
+    depends_on:
+      - backend
+    networks:
+      - memoryday-network
+
+  # 前端管理界面（可选）
+  frontend-admin:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    container_name: memoryday-frontend-admin
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000/api
+      - REACT_APP_DEPLOYMENT_MODE=local
+    depends_on:
+      - backend
+    networks:
+      - memoryday-network
+
+volumes:
+  db_data:
+  redis_data:
+
+networks:
+  memoryday-network:
+    driver: bridge

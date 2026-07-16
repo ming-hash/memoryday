@@ -1,0 +1,124 @@
+/* ==================== 菜品卡片组件 - 温暖水彩美食风 ==================== */
+
+.dish-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 24rpx;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.dish-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3rpx;
+  background: var(--color-primary-gradient);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.dish-card:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-sm);
+}
+
+.dish-card:active::before {
+  opacity: 0.8;
+}
+
+.dish-image {
+  width: 100%;
+  height: 300rpx;
+  display: block;
+  background: #FDF6EF;
+}
+
+.dish-image-default {
+  width: 100%;
+  height: 300rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FDF6EF;
+  font-size: 100rpx;
+  opacity: 0.5;
+}
+
+.dish-content {
+  padding: 24rpx 24rpx 28rpx;
+}
+
+.dish-name {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  display: block;
+  margin-bottom: 14rpx;
+  line-height: 1.3;
+}
+
+.dish-description {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.dish-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-bottom: 18rpx;
+}
+
+.meta-item {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: center;
+}
+
+.meta-item .icon {
+  margin-right: 8rpx;
+  font-size: var(--font-size-xs);
+}
+
+.dish-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-bottom: 18rpx;
+}
+
+.tag {
+  background: #FFF0E8;
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  padding: 6rpx 18rpx;
+  border-radius: 20rpx;
+  font-weight: 500;
+  border: 1rpx solid rgba(232, 152, 108, 0.12);
+}
+
+.dish-rating {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.rating-stars {
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  letter-spacing: 2rpx;
+}
+
+.rating-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}

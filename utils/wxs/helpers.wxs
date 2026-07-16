@@ -1,0 +1,17 @@
+// WXS 辅助函数模块
+// 用于在 WXML 模板中执行 JavaScript 方法
+
+/**
+ * 检查数组是否包含某个值
+ */
+function includes(arr, value) {
+  if (!arr) return false
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] === value) return true
+  }
+  return false
+}
+
+module.exports = {
+  includes: includes
+}

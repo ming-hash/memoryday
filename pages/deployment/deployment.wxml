@@ -1,0 +1,76 @@
+<!--pages/deployment/deployment.wxml-->
+<view class="deployment-page">
+  <!-- 当前配置信息 -->
+  <view class="current-config">
+    <view class="config-header">
+      <text class="title">当前部署配置</text>
+      <text class="mode-tag {{deploymentMode}}">{{getModeTitle(deploymentMode)}}</text>
+    </view>
+    <view class="config-details">
+      <view class="config-item">
+        <text class="label">API地址:</text>
+        <text class="value">{{currentConfig.baseUrl}}</text>
+      </view>
+      <view class="config-item">
+        <text class="label">部署模式:</text>
+        <text class="value">{{currentConfig.deploymentMode}}</text>
+      </view>
+      <view class="config-item">
+        <text class="label">使用CloudBase:</text>
+        <text class="value">{{currentConfig.useCloudBase ? '是' : '否'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 部署选项 -->
+  <view class="deployment-options">
+    <text class="section-title">选择部署模式</text>
+    
+    <view class="option-list">
+      <block wx:for="{{deploymentOptions}}" wx:key="name">
+        <view 
+          class="option-item {{item.name === deploymentMode ? 'active' : ''}} {{item.enabled ? '' : 'disabled'}}"
+          data-mode="{{item.name}}"
+          bindtap="selectDeployment"
+        >
+          <view class="option-header">
+            <view class="option-title">
+              <text>{{item.title}}</text>
+              <text class="badge {{item.name}}">{{item.name}}</text>
+            </view>
+            <view class="option-status">
+              <text wx:if="{{item.name === deploymentMode}}" class="current">当前使用</text>
+              <text wx:if="{{!item.enabled}}" class="disabled-text">不可用</text>
+            </view>
+          </view>
+          
+          <view class="option-description">
+            <text>{{item.description}}</text>
+          </view>
+          
+          <view class="option-details">
+            <text class="api-url">API: {{item.apiUrl}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn test-btn" bindtap="testConnection">测试连接</button>
+    <button class="btn guide-btn" bindtap="viewDeploymentGuide">查看部署指南</button>
+    <button class="btn copy-btn" bindtap="copyConfig">复制配置</button>
+  </view>
+
+  <!-- 部署说明 -->
+  <view class="deployment-info">
+    <text class="info-title">部署说明</text>
+    <view class="info-content">
+      <text class="info-item">• 本地开发环境：适合开发调试，使用Docker容器</text>
+      <text class="info-item">• 本地生产环境：完整生产环境部署</text>
+      <text class="info-item">• 腾讯云CloudBase：云端部署，无需管理服务器</text>
+      <text class="info-item">• 切换部署模式后需要重启小程序生效</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,61 @@
+# 微信云托管服务配置
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: memoryday-service
+  namespace: memoryday-namespace
+spec:
+  selector:
+    app: memoryday-backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memoryday-deployment
+  namespace: memoryday-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: memoryday-backend
+  template:
+    metadata:
+      labels:
+        app: memoryday-backend
+    spec:
+      containers:
+      - name: memoryday-container
+        image: memoryday-backend:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DJANGO_SETTINGS_MODULE
+          value: memoryday_backend.settings.production
+        - name: WX_CLOUD_ENV
+          value: memoryday-prod
+        - name: WX_CLOUD_APPID
+          value: wxbe5cb0f551d030e5
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /api/health/
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health/
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      restartPolicy: Always

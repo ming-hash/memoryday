@@ -1,0 +1,16 @@
+"""
+ASGI config for memoryday_backend project.
+
+It exposes the ASGI callable as a module-level variable named ``application``.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/4.2/t极速opics/asgi/
+"""
+
+import os
+
+from django.core.asgi import get_asgi_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'memoryday_backend.settings.production')
+
+application = get_asgi_application()

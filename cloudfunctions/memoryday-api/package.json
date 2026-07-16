@@ -1,0 +1,9 @@
+{
+  "name": "memoryday-api",
+  "version": "1.0.0",
+  "description": "MemoryDay小程序云函数API",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

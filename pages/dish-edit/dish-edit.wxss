@@ -1,0 +1,317 @@
+/* ==================== 菜品编辑页 - 温暖水彩美食风 ==================== */
+
+.page-container {
+  background: var(--color-bg-page);
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+.section {
+  margin-bottom: 28rpx;
+  padding: 32rpx 28rpx;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  box-shadow: var(--shadow-sm);
+}
+
+.section-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 28rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid var(--color-divider);
+}
+
+/* 图片上传 */
+.image-uploader {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.image-preview {
+  position: relative;
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+}
+
+.image-remove {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background: rgba(232, 90, 90, 0.85);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-remove-text {
+  font-size: 24rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.image-upload-btn {
+  width: 200rpx;
+  height: 200rpx;
+  border: 2rpx dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #FFF9F3;
+  transition: all 0.2s ease;
+}
+
+.upload-icon {
+  font-size: 48rpx;
+  margin-bottom: 12rpx;
+  opacity: 0.35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-placeholder);
+}
+
+/* 表单样式 */
+.form-group {
+  margin-bottom: 28rpx;
+}
+
+.form-label {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 14rpx;
+}
+
+.form-input,
+.form-textarea {
+  border: 2rpx solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20rpx 24rpx;
+  font-size: var(--font-size-base);
+  background: var(--color-bg-card);
+  width: 100%;
+  box-sizing: border-box;
+  color: var(--color-text-primary);
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.form-textarea {
+  height: 140rpx;
+  resize: none;
+}
+
+/* 选择器样式 */
+.picker {
+  border: 2rpx solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20rpx 24rpx;
+  font-size: var(--font-size-base);
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+}
+
+.picker.placeholder {
+  color: var(--color-text-placeholder);
+}
+
+/* 标签选择器 */
+.tag-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+
+.tag-selector .tag {
+  padding: 12rpx 26rpx;
+  border: 2rpx solid var(--color-border);
+  border-radius: var(--radius-capsule);
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-card);
+  transition: all 0.2s ease;
+}
+
+.tag-selector .tag.active {
+  background: var(--color-primary-gradient);
+  color: #fff;
+  border-color: var(--color-primary);
+  box-shadow: 0 3rpx 12rpx rgba(232, 152, 108, 0.25);
+}
+
+/* 食材输入 */
+.ingredients-input {
+  display: flex;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.ingredient-input {
+  flex: 1;
+  border: 2rpx solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18rpx 20rpx;
+  font-size: var(--font-size-base);
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+}
+
+.ingredients-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.ingredients-tags .tag {
+  position: relative;
+  padding: 8rpx 18rpx 8rpx 22rpx;
+  background: #FFF0E8;
+  color: var(--color-primary);
+  border-radius: 20rpx;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.tag-remove {
+  margin-left: 10rpx;
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  color: var(--color-danger);
+}
+
+/* 星级评分 */
+.star-rating {
+  display: flex;
+  gap: 14rpx;
+}
+
+.star {
+  font-size: 38rpx;
+  color: var(--color-divider);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.star.active {
+  color: var(--color-primary);
+}
+
+/* 操作按钮 */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-top: 44rpx;
+  padding: 0 20rpx;
+}
+
+.btn-danger {
+  background: var(--color-danger);
+  color: white;
+  border: none;
+  border-radius: var(--radius-capsule);
+  font-weight: 500;
+}
+
+.btn-danger::after {
+  display: none;
+}
+
+.btn-danger:active {
+  opacity: 0.9;
+}
+
+/* 删除确认弹窗 */
+.delete-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.dialog-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-bg-mask);
+}
+
+.dialog-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  padding: 44rpx;
+  width: 82%;
+  max-width: 600rpx;
+  box-shadow: var(--shadow-lg);
+}
+
+.dialog-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 24rpx;
+  color: var(--color-text-primary);
+}
+
+.dialog-message {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-bottom: 40rpx;
+  line-height: 1.6;
+}
+
+.dialog-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+}
+
+/* 响应式调整 */
+@media (min-width: 768px) {
+  .page-container {
+    max-width: 600rpx;
+    margin: 0 auto;
+  }
+
+  .image-preview,
+  .image-upload-btn {
+    width: 180rpx;
+    height: 180rpx;
+  }
+}

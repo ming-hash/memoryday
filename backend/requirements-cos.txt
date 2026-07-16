@@ -1,0 +1,22 @@
+# 腾讯云COS相关依赖
+# 用于支持对象存储功能
+
+# 腾讯云COS Python SDK
+#qcloud-cos-python==2.2.7
+cos-python-sdk-v5>=1.9.26
+
+
+# 环境变量管理
+django-environ==0.9.0
+
+# 图片处理（可选）
+Pillow==9.5.0
+
+# 安全相关
+cryptography==41.0.7
+
+# HTTP客户端
+requests==2.31.0
+
+# 日期时间处理
+python-dateutil==2.8.2

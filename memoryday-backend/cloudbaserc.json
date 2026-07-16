@@ -1,0 +1,6 @@
+{
+  "envId": "whateatday-0gor3cwl4f527bba",
+  "cloudrun": {
+    "name": "memoryday-backend"
+  }
+}

@@ -1,0 +1,153 @@
+/* ==================== 设置页 - 温暖水彩美食风 ==================== */
+
+.settings-container {
+  min-height: 100vh;
+  background: var(--color-bg-page);
+  padding: 20rpx;
+}
+
+.user-section {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  padding: 40rpx;
+  margin-bottom: 28rpx;
+  display: flex;
+  align-items: center;
+  gap: 30rpx;
+  box-shadow: var(--shadow-sm);
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFECD2, #F0A060);
+  box-shadow: var(--shadow-sm);
+}
+
+.user-avatar-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFECD2, #F0A060);
+  font-size: 60rpx;
+  box-shadow: var(--shadow-sm);
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  display: block;
+  font-size: var(--font-size-xxl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 10rpx;
+}
+
+.user-phone {
+  display: block;
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin-bottom: 8rpx;
+}
+
+.user-desc {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+.settings-list {
+  margin-bottom: 40rpx;
+}
+
+.settings-group {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  margin-bottom: 28rpx;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.group-title {
+  display: block;
+  padding: 32rpx 40rpx 20rpx;
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  padding: 32rpx 40rpx;
+  border-bottom: 1rpx solid var(--color-divider);
+  position: relative;
+  transition: background 0.15s ease;
+}
+
+.settings-item:last-child {
+  border-bottom: none;
+}
+
+.settings-item:active {
+  background: #FFF9F3;
+}
+
+.item-icon {
+  font-size: 36rpx;
+  margin-right: 20rpx;
+  width: 40rpx;
+  text-align: center;
+  color: var(--color-primary);
+  opacity: 0.7;
+}
+
+.item-label {
+  flex: 1;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-primary);
+}
+
+.item-value {
+  font-size: var(--font-size-base);
+  color: var(--color-text-tertiary);
+  margin-right: 16rpx;
+}
+
+.item-arrow {
+  font-size: 32rpx;
+  color: var(--color-border);
+  font-weight: normal;
+}
+
+.item-switch {
+  transform: scale(0.85);
+}
+
+.logout-section {
+  padding: 40rpx 20rpx;
+}
+
+.logout-btn {
+  background: var(--color-danger);
+  color: #fff;
+  border-radius: var(--radius-capsule);
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: var(--font-size-xl);
+  font-weight: 500;
+}
+
+.logout-btn:active {
+  opacity: 0.9;
+}
+
+.logout-btn::after {
+  display: none;
+}

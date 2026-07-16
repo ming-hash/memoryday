@@ -1,0 +1,297 @@
+/* ==================== 全局设计令牌 - 温暖水彩美食风 ==================== */
+page {
+  /* 基础背景 */
+  background-color: #FFF8F0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #5D4E3E;
+
+  /* 主色调 - 温暖珊瑚橘 */
+  --color-primary: #E8986C;
+  --color-primary-light: #F0A060;
+  --color-primary-dark: #D4885A;
+  --color-primary-gradient: linear-gradient(135deg, #F0A060 0%, #E8986C 100%);
+
+  /* 背景色 - 奶油水彩风 */
+  --color-bg-page: #FFF8F0;
+  --color-bg-card: #FFFFFF;
+  --color-bg-mask: rgba(0, 0, 0, 0.5);
+
+  /* 文字色 - 温暖棕灰 */
+  --color-text-primary: #5D4E3E;
+  --color-text-secondary: #8B7D75;
+  --color-text-tertiary: #A89B94;
+  --color-text-placeholder: #B8ADA5;
+
+  /* 边框和分隔线 */
+  --color-border: #E8DED5;
+  --color-divider: #F0EBE6;
+
+  /* 功能色 - 保留必要语义色 */
+  --color-danger: #E85A5A;
+  --color-success: #5AAA7A;
+  --color-warning: #E8A55A;
+  --color-info: #5A8AE8;
+
+  /* 圆角规范 */
+  --radius-sm: 8rpx;
+  --radius-md: 12rpx;
+  --radius-lg: 16rpx;
+  --radius-xl: 20rpx;
+  --radius-capsule: 50rpx;
+
+  /* 阴影规范 */
+  --shadow-sm: 0 2rpx 8rpx rgba(93, 78, 62, 0.08);
+  --shadow-md: 0 4rpx 16rpx rgba(93, 78, 62, 0.1);
+  --shadow-lg: 0 8rpx 24rpx rgba(93, 78, 62, 0.12);
+
+  /* 字体规范 */
+  --font-size-xs: 22rpx;
+  --font-size-sm: 24rpx;
+  --font-size-md: 26rpx;
+  --font-size-base: 28rpx;
+  --font-size-lg: 30rpx;
+  --font-size-xl: 32rpx;
+  --font-size-xxl: 36rpx;
+}
+
+/* ==================== 通用容器 ==================== */
+.container {
+  padding: 20rpx;
+}
+
+/* 卡片样式 */
+.card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+
+/* 按钮样式 */
+.btn-primary {
+  background: var(--color-primary-gradient);
+  color: white;
+  border: none;
+  border-radius: var(--radius-capsule);
+  font-weight: 500;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-secondary {
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+  border: 2rpx solid var(--color-border);
+  border-radius: var(--radius-capsule);
+  font-weight: 500;
+}
+
+.btn-small {
+  padding: 12rpx 24rpx;
+  font-size: var(--font-size-sm);
+}
+
+.btn-medium {
+  padding: 20rpx 40rpx;
+  font-size: var(--font-size-base);
+}
+
+.btn-large {
+  padding: 28rpx 56rpx;
+  font-size: var(--font-size-xl);
+}
+
+/* 标签样式 - 统一为珊瑚橘系 */
+.tag {
+  display: inline-block;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: var(--font-size-xs);
+  margin-right: 10rpx;
+  margin-bottom: 8rpx;
+}
+
+.tag-primary {
+  background: #FFF0E8;
+  color: var(--color-primary);
+}
+
+.tag-success {
+  background: #EDF7EE;
+  color: var(--color-success);
+}
+
+.tag-warning {
+  background: #FFF5EB;
+  color: var(--color-warning);
+}
+
+.tag-danger {
+  background: #FFF0EF;
+  color: var(--color-danger);
+}
+
+/* 文本样式 */
+.text-center {
+  text-align: center;
+}
+
+.text-bold {
+  font-weight: 600;
+}
+
+.text-muted {
+  color: var(--color-text-tertiary);
+}
+
+.text-small {
+  font-size: var(--font-size-sm);
+}
+
+.text-medium {
+  font-size: var(--font-size-base);
+}
+
+.text-large {
+  font-size: var(--font-size-xl);
+}
+
+.text-xlarge {
+  font-size: var(--font-size-xxl);
+}
+
+/* 间距工具类 */
+.mt-10 { margin-top: 10rpx; }
+.mt-20 { margin-top: 20rpx; }
+.mt-30 { margin-top: 30rpx; }
+.mb-10 { margin-bottom: 10rpx; }
+.mb-20 { margin-bottom: 20rpx; }
+.mb-30 { margin-bottom: 30rpx; }
+.ml-10 { margin-left: 10rpx; }
+.ml-20 { margin-left: 20rpx; }
+.mr-10 { margin-right: 10rpx; }
+.mr-20 { margin-right: 20rpx; }
+
+.p-20 { padding: 20rpx; }
+.p-30 { padding: 30rpx; }
+
+/* 弹性布局 */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+/* 图片样式 */
+.image-responsive {
+  width: 100%;
+  height: auto;
+}
+
+.image-round {
+  border-radius: var(--radius-lg);
+}
+
+.image-circle {
+  border-radius: 50%;
+}
+
+/* 输入框样式 */
+.input {
+  border: 2rpx solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20rpx;
+  font-size: var(--font-size-base);
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+/* 加载状态 */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60rpx;
+}
+
+.loading-text {
+  margin-left: 20rpx;
+  color: var(--color-text-tertiary);
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 80rpx 40rpx;
+  color: var(--color-text-tertiary);
+}
+
+.empty-state image {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.5;
+}
+
+/* 动画效果 */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gentleBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* 水彩纹理背景（可选用于页面） */
+.watercolor-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 15% 25%, rgba(240, 160, 96, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(232, 152, 108, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(255, 222, 185, 0.15) 0%, transparent 55%),
+    radial-gradient(circle at 25% 70%, rgba(240, 160, 96, 0.06) 0%, transparent 35%),
+    radial-gradient(circle at 75% 65%, rgba(232, 152, 108, 0.1) 0%, transparent 45%),
+    linear-gradient(180deg, #FFF8F0 0%, #FFFAF5 100%);
+  pointer-events: none;
+}
+
+/* 响应式工具类 */
+@media (min-width: 768px) {
+  .container {
+    max-width: 750rpx;
+    margin: 0 auto;
+  }
+}

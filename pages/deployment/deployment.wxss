@@ -1,0 +1,244 @@
+/* pages/deployment/deployment.wxss */
+
+.deployment-page {
+  padding: 20rpx;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 当前配置样式 */
+.current-config {
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.config-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.config-header .title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.mode-tag {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.mode-tag.local-dev {
+  background: #e6f7ff;
+  color: #1890ff;
+  border: 1rpx solid #91d5ff;
+}
+
+.mode-tag.local {
+  background: #f6ffed;
+  color: #52c41a;
+  border: 1rpx solid #b7eb8f;
+}
+
+.mode-tag.cloudbase {
+  background: #fff7e6;
+  color: #fa8c16;
+  border: 1rpx solid #ffd591;
+}
+
+.config-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.config-item:last-child {
+  border-bottom: none;
+}
+
+.config-item .label {
+  font-size: 28rpx;
+  color: #666;
+  min-width: 200rpx;
+}
+
+.config-item .value {
+  font-size: 28rpx;
+  color: #333;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+/* 部署选项样式 */
+.deployment-options {
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 30rpx;
+  display: block;
+}
+
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.option-item {
+  border: 2rpx solid #e8e8e8;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.option-item.active {
+  border-color: #1890ff;
+  background: #f0f8ff;
+}
+
+.option-item.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.option-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.option-title {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+}
+
+.option-title text:first-child {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.badge {
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+}
+
+.badge.local-dev {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.badge.local {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.badge.cloudbase {
+  background: #fff7e6;
+  color: #fa8c16;
+}
+
+.option-status .current {
+  color: #52c41a;
+  font-size: 24rpx;
+}
+
+.option-status .disabled-text {
+  color: #ff4d4f;
+  font-size: 24rpx;
+}
+
+.option-description {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+  line-height: 1.5;
+}
+
+.option-details .api-url {
+  font-size: 24rpx;
+  color: #999;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+/* 操作按钮样式 */
+.action-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.btn {
+  flex: 1;
+  height: 80rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  border: none;
+}
+
+.test-btn {
+  background: #1890ff;
+  color: white;
+}
+
+.guide-btn {
+  background: #52c41a;
+  color: white;
+}
+
+.copy-btn {
+  background: #fa8c16;
+  color: white;
+}
+
+/* 部署说明样式 */
+.deployment-info {
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.info-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.info-item {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+}

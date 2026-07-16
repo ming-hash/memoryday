@@ -1,0 +1,94 @@
+<view class="settings-container">
+  <view class="user-section">
+    <image wx:if="{{userInfo.avatar}}" class="user-avatar" src="{{userInfo.avatar}}" mode="aspectFill"></image>
+    <text wx:else class="user-avatar-default">👤</text>
+    <view class="user-info">
+      <text class="user-name">{{userInfo.nickname || '未设置昵称'}}</text>
+      <text class="user-phone" wx:if="{{userInfo.phone}}">{{userInfo.phone}}</text>
+      <text class="user-desc" wx:if="{{userInfo.isWechatUser}}">微信用户</text>
+    </view>
+  </view>
+
+  <view class="settings-list">
+    <!-- 账号设置 -->
+    <view class="settings-group">
+      <text class="group-title">账号设置</text>
+      <view class="settings-item" bindtap="onEditProfile">
+        <text class="item-icon">👤</text>
+        <text class="item-label">编辑资料</text>
+        <text class="item-arrow">›</text>
+      </view>
+      <view class="settings-item" bindtap="onChangePassword">
+        <text class="item-icon">🔒</text>
+        <text class="item-label">修改密码</text>
+        <text class="item-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 应用设置 -->
+    <view class="settings-group">
+      <text class="group-title">应用设置</text>
+      <view class="settings-item">
+        <text class="item-icon">🔔</text>
+        <text class="item-label">消息通知</text>
+        <switch class="item-switch" checked="{{settings.notifications}}" bindchange="onNotificationsChange" />
+      </view>
+      <view class="settings-item">
+        <text class="item-icon">🌙</text>
+        <text class="item-label">深色模式</text>
+        <switch class="item-switch" checked="{{settings.darkMode}}" bindchange="onDarkModeChange" />
+      </view>
+      <view class="settings-item" bindtap="onClearCache">
+        <text class="item-icon">🗑️</text>
+        <text class="item-label">清理缓存</text>
+        <text class="item-value">{{cacheSize}}</text>
+        <text class="item-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 数据管理 -->
+    <view class="settings-group">
+      <text class="group-title">数据管理</text>
+      <view class="settings-item" bindtap="onExportData">
+        <text class="item-icon">📤</text>
+        <text class="item-label">导出数据</text>
+        <text class="item-arrow">›</text>
+      </view>
+      <view class="settings-item" bindtap="onImportData">
+        <text class="item-icon">📥</text>
+        <text class="item-label">导入数据</text>
+        <text class="item-arrow">›</text>
+      </view>
+      <view class="settings-item" bindtap="onBackupData">
+        <text class="item-icon">💾</text>
+        <text class="item-label">数据备份</text>
+        <text class="item-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 关于 -->
+    <view class="settings-group">
+      <text class="group-title">关于</text>
+      <view class="settings-item" bindtap="onAboutApp">
+        <text class="item-icon">ℹ️</text>
+        <text class="item-label">关于应用</text>
+        <text class="item-value">v{{appVersion}}</text>
+        <text class="item-arrow">›</text>
+      </view>
+      <view class="settings-item" bindtap="onFeedback">
+        <text class="item-icon">💬</text>
+        <text class="item-label">意见反馈</text>
+        <text class="item-arrow">›</text>
+      </view>
+      <view class="settings-item" bindtap="onCheckUpdate">
+        <text class="item-icon">🔄</text>
+        <text class="item-label">检查更新</text>
+        <text class="item-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="logout-section">
+    <button class="logout-btn" bindtap="onLogout">退出登录</button>
+  </view>
+</view>

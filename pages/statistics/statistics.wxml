@@ -1,0 +1,93 @@
+<!--pages/statistics/statistics.wxml-->
+<view class="container">
+  <!-- 未登录提示 -->
+  <view wx:if="{{needLogin}}" class="login-prompt card">
+    <text class="login-icon">📊</text>
+    <view class="login-text">请先登录查看统计数据</view>
+    <button class="login-btn" bindtap="goToLogin">去登录</button>
+  </view>
+
+  <!-- 统计概览 -->
+  <block wx:else>
+  <view class="stats-overview card">
+    <view class="stats-title">本周概览</view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <view class="stat-value">{{stats.totalDishes || 0}}</view>
+        <view class="stat-label">总菜品数</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{stats.weeklyRecords || 0}}</view>
+        <view class="stat-label">本周用餐</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{stats.newThisMonth || 0}}</view>
+        <view class="stat-label">本月新增</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 本周最爱 -->
+  <view class="section card">
+    <view class="section-title">本周最爱</view>
+    <view class="top-dishes">
+      <block wx:for="{{stats.topDishes}}" wx:key="id">
+        <view class="top-dish-item">
+          <image class="dish-thumb" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="dish-info">
+            <view class="dish-name">{{item.name}}</view>
+            <view class="dish-count">吃了 {{item.count}} 次</view>
+          </view>
+          <view class="dish-rank">#{{index + 1}}</view>
+        </view>
+      </block>
+      
+      <view wx:if="{{stats.topDishes.length === 0}}" class="empty-state">
+        <text class="empty-icon">📊</text>
+        <view class="empty-text">暂无本周用餐记录</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 菜系分布 -->
+  <view class="section card">
+    <view class="section-title">菜系分布</view>
+    <view class="chart-container">
+      <canvas canvas-id="cuisineChart" class="chart"></canvas>
+    </view>
+    <view class="chart-legend">
+      <block wx:for="{{stats.cuisineDistribution}}" wx:key="type">
+        <view class="legend-item">
+          <view class="legend-color" style="background-color: {{item.color}};"></view>
+          <view class="legend-label">{{item.type}}</view>
+          <view class="legend-value">{{item.percentage}}%</view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 用餐场景分布 -->
+  <view class="section card">
+    <view class="section-title">用餐场景分布</view>
+    <view class="meal-time-stats">
+      <block wx:for="{{stats.mealTimeDistribution}}" wx:key="time">
+        <view class="meal-time-item">
+          <view class="meal-time-label">{{item.time}}</view>
+          <view class="progress-bar">
+            <view 
+              class="progress-fill" 
+              style="width: {{item.percentage}}%; background-color: {{item.color}};"
+            ></view>
+          </view>
+          <view class="meal-time-value">{{item.count}}次 ({{item.percentage}}%)</view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 数据更新时间 -->
+  <view class="update-time">
+    数据更新于：{{stats.updateTime}}
+  </view>
+  </block>
+</view>

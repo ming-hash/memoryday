@@ -1,0 +1,46 @@
+{
+  "$schema": "https://framework-1258016615.tcloudbaseapp.com/schema/latest.json",
+  "version": "2.0",
+  "services": {
+    "memoryday-backend": {
+      "service": "memoryday-backend",
+      "provider": {
+        "type": "wx.cloud.container",
+        "version": "1.0"
+      },
+      "framework": {
+        "name": "django",
+        "version": "4.2.7"
+      },
+      "routes": [
+        {
+          "path": "/*",
+          "targetType": "container",
+          "target": "memoryday-backend"
+        }
+      ],
+      "container": {
+        "image": "memoryday-backend:latest",
+        "port": 8000,
+        "cpu": 0.25,
+        "mem": 0.5,
+        "envVariables": {
+          "DJANGO_SETTINGS_MODULE": "memoryday_backend.settings.production",
+          "WX_CLOUD": "true",
+          "WX_CLOUD_ENV": "whateatday-0gor3cwl4f527bba"
+        },
+        "minNum": 1,
+        "maxNum": 3,
+        "policyType": "cpu",
+        "policyThreshold": 80,
+        "healthCheck": {
+          "path": "/api/health/",
+          "port": 8000,
+          "type": "http",
+          "timeout": 5,
+          "period": 10
+        }
+      }
+    }
+  }
+}

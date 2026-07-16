@@ -1,0 +1,39 @@
+{
+  "name": "memoryday-miniprogram",
+  "version": "1.0.0",
+  "description": "今日吃啥 - 微信小程序，帮助你记录和管理菜谱",
+  "main": "app.js",
+  "scripts": {
+    "dev": "echo '请在微信开发者工具中编译'",
+    "build": "echo '请在微信开发者工具中上传'",
+    "lint": "eslint . --ext .js",
+    "format": "prettier --write \"**/*.{js,json,wxml,wxss}\"",
+    "setup": "node scripts/setup.js",
+    "setup-cos": "node scripts/install-cos-sdk.js",
+    "clean": "rm -rf dist build",
+    "test": "echo '暂无测试框架'",
+    "test-cos": "node scripts/test-cos.js"
+  },
+  "keywords": [
+    "微信小程序",
+    "菜谱管理",
+    "饮食记录",
+    "健康饮食"
+  ],
+  "author": "开发团队",
+  "license": "MIT",
+  "dependencies": {
+    "cos-wx-sdk-v5": "^1.3.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/memoryday-miniprogram.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/memoryday-miniprogram/issues"
+  },
+  "homepage": "https://github.com/your-username/memoryday-miniprogram#readme"
+}

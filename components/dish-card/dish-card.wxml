@@ -1,0 +1,38 @@
+<view class="dish-card" bindtap="onCardTap">
+  <image wx:if="{{dish.image}}" class="dish-image" src="{{dish.image}}" mode="aspectFill"></image>
+  <text wx:else class="dish-image-default">🍽️</text>
+  <view class="dish-content">
+    <text class="dish-name">{{ dish.name }}</text>
+    <text class="dish-description">{{ dish.description || '暂无描述' }}</text>
+    
+    <view class="dish-meta">
+      <text class="meta-item">
+        <text class="icon">⏱</text>
+        {{ dish.cookingTime || '未知' }}
+      </text>
+      <text class="meta-item">
+        <text class="icon">🔥</text>
+        {{ dish.difficulty || '普通' }}
+      </text>
+      <text class="meta-item" wx:if="{{ dish.cuisineType }}">
+        <text class="icon">🍽</text>
+        {{ dish.cuisineType }}
+      </text>
+    </view>
+
+    <view class="dish-tags" wx:if="{{ dish.tags && dish.tags.length > 0 }}">
+      <text class="tag" wx:for="{{ dish.tags }}" wx:for-item="tag" wx:key="index">
+        {{ tag }}
+      </text>
+    </view>
+
+    <view class="dish-rating" wx:if="{{ dish.starRating > 0 }}">
+      <text class="rating-stars">
+        <text class="star" wx:for="{{5}}" wx:for-item="i" wx:key="index">
+          {{ i < dish.starRating ? '★' : '☆' }}
+        </text>
+      </text>
+      <text class="rating-text">{{ dish.starRating.toFixed(1) }}</text>
+    </view>
+  </view>
+</view>

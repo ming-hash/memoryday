@@ -1,0 +1,82 @@
+<!--index.wxml-->
+<view>
+  <!-- 水彩背景层 -->
+  <view class="watercolor-bg"></view>
+
+  <!-- 主内容容器 -->
+  <view class="container">
+
+    <!-- 搜索栏 - 撑满整行 -->
+    <view class="search-bar">
+      <view class="search-input">
+        <text class="search-icon">🔍</text>
+        <input 
+          placeholder="搜索菜名或食材" 
+          bindinput="onSearchInput" 
+          value="{{searchKeyword}}"
+          class="search-input-field"
+        />
+        <view wx:if="{{searchKeyword}}" class="clear-btn" bindtap="clearSearch">
+          <text class="clear-icon">✕</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 分类筛选栏 - 均匀分布撑满 -->
+    <view class="filter-bar">
+      <view 
+        class="filter-tag {{activeFilter === 'all' ? 'active' : ''}}" 
+        bindtap="setFilter"
+        data-filter="all"
+      >全部</view>
+      <view 
+        class="filter-tag {{activeFilter === 'breakfast' ? 'active' : ''}}" 
+        bindtap="setFilter"
+        data-filter="breakfast"
+      >早餐</view>
+      <view 
+        class="filter-tag {{activeFilter === 'lunch' ? 'active' : ''}}" 
+        bindtap="setFilter"
+        data-filter="lunch"
+      >午餐</view>
+      <view 
+        class="filter-tag {{activeFilter === 'dinner' ? 'active' : ''}}" 
+        bindtap="setFilter"
+        data-filter="dinner"
+      >晚餐</view>
+      <view 
+        class="filter-tag {{activeFilter === 'favorite' ? 'active' : ''}}" 
+        bindtap="setFilter"
+        data-filter="favorite"
+      >最爱</view>
+    </view>
+
+    <!-- 菜品网格 - 仅图片+名称 -->
+    <view class="dishes-grid">
+      <block wx:for="{{filteredDishes}}" wx:key="id">
+        <view class="dish-card" bindtap="viewDishDetail" data-dish="{{item}}">
+          <image class="dish-image" src="{{item.images[0]}}" mode="aspectFill"></image>
+          <view class="dish-name">{{item.name}}</view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{filteredDishes.length === 0 && !isLoading}}" class="empty-state">
+      <text class="empty-icon">🍽️</text>
+      <view class="empty-text">暂无菜品</view>
+      <view class="empty-subtext">点击下方按钮添加第一个菜品吧～</view>
+    </view>
+
+    <!-- 底部操作区：随机选菜(左) + 添加(右) 同一行 -->
+    <view class="bottom-action-bar">
+      <button class="btn-random {{isSpinning ? 'spinning' : ''}}" bindtap="randomDish">
+        随机选菜
+      </button>
+      <button class="btn-add" bindtap="addDish">
+        <text>+</text>
+      </button>
+    </view>
+
+  </view>
+</view>

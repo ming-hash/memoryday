@@ -1,0 +1,54 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/dish-detail/dish-detail",
+    "pages/dish-edit/dish-edit",
+    "pages/statistics/statistics",
+    "pages/user/user",
+    "pages/login/login",
+    "pages/settings/settings",
+    "pages/deployment/deployment",
+    "pages/webview/webview"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#E8986C",
+    "navigationBarTitleText": "今日吃啥",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#FFF8F0"
+  },
+  "tabBar": {
+    "color": "#A89B94",
+    "selectedColor": "#E8986C",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "菜单",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/statistics/statistics",
+        "text": "统计",
+        "iconPath": "images/stats.png",
+        "selectedIconPath": "images/stats-active.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "images/user.png",
+        "selectedIconPath": "images/user-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  }
+}
