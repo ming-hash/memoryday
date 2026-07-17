@@ -1,21 +1,25 @@
 <!--pages/dish-detail/dish-detail.wxml-->
 <view class="container">
+  <!-- 水彩背景 -->
+  <view class="watercolor-bg"></view>
+
   <!-- 图片轮播 -->
-  <swiper class="dish-swiper" indicator-dots="{{dish.images.length > 1}}" autoplay="{{dish.images.length > 1}}">
+  <swiper class="dish-swiper" indicator-dots="{{dish.images.length > 1}}" autoplay="{{dish.images.length > 1}}" indicator-color="rgba(255,255,255,0.4)" indicator-active-color="#D4735E">
     <block wx:for="{{dish.images}}" wx:key="index">
       <swiper-item>
-        <image class="dish-image" src="{{item}}" mode="aspectFill"></image>
+        <image class="dish-image" src="{{item}}" mode="aspectFill" lazy-load="true"></image>
       </swiper-item>
     </block>
   </swiper>
 
   <!-- 菜品基本信息 -->
   <view class="dish-info card">
-    <view class="dish-header flex-between">
+    <!-- 标题行 -->
+    <view class="dish-header">
       <view class="dish-name">{{dish.name}}</view>
       <view class="star-rating">
-        <text wx:for="{{[1,2,3,4,5]}}" wx:key="index">
-          {{index < dish.starRating ? '★' : '☆'}}
+        <text wx:for="{{[1,2,3,4,5]}}" wx:key="index" class="star {{index < dish.starRating ? 'star-filled' : 'star-empty'}}">
+          {{index < dish.starRating ? '\u2605' : '\u2606'}}
         </text>
       </view>
     </view>
@@ -24,25 +28,25 @@
       {{dish.description}}
     </view>
 
-    <!-- 标签信息 -->
+    <!-- 标签信息 - 去掉emoji，改用文本标识 -->
     <view class="dish-meta">
       <view class="meta-item">
-        <text class="meta-icon">⏱️</text>
+        <view class="meta-dot" style="background: #D4735E;"></view>
         <text>烹饪时间：{{dish.cookingTime}}</text>
       </view>
       
       <view class="meta-item">
-        <text class="meta-icon">🏆</text>
+        <view class="meta-dot" style="background: #E8A87C;"></view>
         <text>难度：{{dish.difficulty}}</text>
       </view>
 
       <view class="meta-item">
-        <text class="meta-icon">🍳</text>
+        <view class="meta-dot" style="background: #5A8A6A;"></view>
         <text>菜系：{{dish.cuisineType}}</text>
       </view>
 
       <view class="meta-item" wx:if="{{dish.mealTime.length > 0}}">
-        <text class="meta-icon">🍴</text>
+        <view class="meta-dot" style="background: #D4735E;"></view>
         <text>用餐场景：{{mealTimeLabels}}</text>
       </view>
     </view>
@@ -60,10 +64,9 @@
 
   <!-- 操作按钮 -->
   <view class="action-buttons">
-    <button class="btn-secondary btn-medium" bindtap="editDish">编辑</button>
-    <button class="btn-primary btn-medium" bindtap="randomThisType">同类随机</button>
-    <button class="btn-primary btn-medium share-btn" open-type="share">
-      <text class="btn-icon">📤</text>
+    <button class="btn-secondary" bindtap="editDish">编辑</button>
+    <button class="btn-primary" bindtap="randomThisType">同类随机</button>
+    <button class="btn-secondary share-btn" open-type="share">
       分享
     </button>
   </view>
@@ -76,7 +79,7 @@
       <view class="dialog-message">确定要删除"{{dish.name}}"吗？此操作不可恢复。</view>
       <view class="dialog-buttons">
         <button class="btn-secondary" bindtap="hideDeleteDialog">取消</button>
-        <button class="btn-primary" bindtap="confirmDelete">确认删除</button>
+        <button class="btn-primary" bindtap="confirmDelete" style="background: var(--color-danger); box-shadow: 0 4rpx 16rpx rgba(212, 96, 90, 0.25);">确认删除</button>
       </view>
     </view>
   </view>

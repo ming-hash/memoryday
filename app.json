@@ -12,14 +12,14 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#E8986C",
+    "navigationBarBackgroundColor": "#D4735E",
     "navigationBarTitleText": "今日吃啥",
     "navigationBarTextStyle": "white",
-    "backgroundColor": "#FFF8F0"
+    "backgroundColor": "#FDF8F3"
   },
   "tabBar": {
     "color": "#A89B94",
-    "selectedColor": "#E8986C",
+    "selectedColor": "#D4735E",
     "backgroundColor": "#ffffff",
     "borderStyle": "black",
     "list": [

@@ -21,7 +21,7 @@
   width: 120rpx;
   height: 120rpx;
   border-radius: 50%;
-  background: linear-gradient(135deg, #FFECD2, #F0A060);
+  background: var(--color-primary-gradient);
   box-shadow: var(--shadow-sm);
 }
 
@@ -32,9 +32,15 @@
   width: 120rpx;
   height: 120rpx;
   border-radius: 50%;
-  background: linear-gradient(135deg, #FFECD2, #F0A060);
-  font-size: 60rpx;
+  background: var(--color-primary-gradient);
   box-shadow: var(--shadow-sm);
+}
+
+.avatar-default-text {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #fff;
+  font-family: Georgia, 'Times New Roman', serif;
 }
 
 .user-info {
@@ -96,16 +102,22 @@
 }
 
 .settings-item:active {
-  background: #FFF9F3;
+  background: #F5EDE8;
 }
 
 .item-icon {
   font-size: 36rpx;
   margin-right: 20rpx;
   width: 40rpx;
+  height: 40rpx;
   text-align: center;
+  line-height: 40rpx;
   color: var(--color-primary);
-  opacity: 0.7;
+  background: #FAEEE8;
+  border-radius: 50%;
+  font-weight: 700;
+  font-family: Georgia, 'Times New Roman', serif;
+  flex-shrink: 0;
 }
 
 .item-label {

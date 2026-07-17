@@ -1,18 +1,12 @@
-/* ==================== 菜品编辑页 - 温暖水彩美食风 ==================== */
-
-.page-container {
-  background: var(--color-bg-page);
-  min-height: 100vh;
-  padding-bottom: 40rpx;
-}
+/* ==================== 菜品编辑页 - 有机自然美食风 v2.0 ==================== */
 
 .section {
   margin-bottom: 28rpx;
   padding: 32rpx 28rpx;
   background: var(--color-bg-card);
   border-radius: var(--radius-xl);
-  margin-left: 20rpx;
-  margin-right: 20rpx;
+  margin-left: 0;
+  margin-right: 0;
   box-shadow: var(--shadow-sm);
 }
 
@@ -23,6 +17,12 @@
   margin-bottom: 28rpx;
   padding-bottom: 20rpx;
   border-bottom: 2rpx solid var(--color-divider);
+  font-family: 'Georgia', serif;
+}
+
+.required {
+  color: var(--color-danger);
+  font-weight: 400;
 }
 
 /* 图片上传 */
@@ -50,9 +50,9 @@
   position: absolute;
   top: 8rpx;
   right: 8rpx;
-  width: 40rpx;
-  height: 40rpx;
-  background: rgba(232, 90, 90, 0.85);
+  width: 36rpx;
+  height: 36rpx;
+  background: rgba(212, 96, 90, 0.85);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -60,9 +60,9 @@
 }
 
 .image-remove-text {
-  font-size: 24rpx;
+  font-size: 20rpx;
   color: #fff;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .image-upload-btn {
@@ -74,17 +74,31 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #FFF9F3;
+  background: #FDF5EF;
   transition: all 0.2s ease;
 }
 
-.upload-icon {
-  font-size: 48rpx;
-  margin-bottom: 12rpx;
-  opacity: 0.35;
+.image-upload-btn:active {
+  background: #F5EDE8;
+  border-color: var(--color-primary-light);
+}
+
+.upload-icon-box {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: #F0EAE5;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 12rpx;
+}
+
+.upload-icon-text {
+  font-size: 32rpx;
+  color: var(--color-text-tertiary);
+  font-weight: 300;
+  font-family: 'Georgia', serif;
 }
 
 .upload-text {
@@ -110,16 +124,17 @@
   border-radius: var(--radius-md);
   padding: 20rpx 24rpx;
   font-size: var(--font-size-base);
-  background: var(--color-bg-card);
+  background: #FDFBF9;
   width: 100%;
   box-sizing: border-box;
   color: var(--color-text-primary);
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
 .form-input:focus,
 .form-textarea:focus {
   border-color: var(--color-primary);
+  background: var(--color-bg-card);
   outline: none;
 }
 
@@ -134,8 +149,13 @@
   border-radius: var(--radius-md);
   padding: 20rpx 24rpx;
   font-size: var(--font-size-base);
-  background: var(--color-bg-card);
+  background: #FDFBF9;
   color: var(--color-text-primary);
+  transition: border-color 0.2s ease;
+}
+
+.picker:active {
+  border-color: var(--color-primary-light);
 }
 
 .picker.placeholder {
@@ -149,21 +169,26 @@
   gap: 14rpx;
 }
 
-.tag-selector .tag {
+.tag-select {
   padding: 12rpx 26rpx;
   border: 2rpx solid var(--color-border);
   border-radius: var(--radius-capsule);
   font-size: var(--font-size-md);
   color: var(--color-text-secondary);
   background: var(--color-bg-card);
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.tag-selector .tag.active {
+.tag-select:active {
+  transform: scale(0.95);
+}
+
+.tag-select.active {
   background: var(--color-primary-gradient);
   color: #fff;
   border-color: var(--color-primary);
-  box-shadow: 0 3rpx 12rpx rgba(232, 152, 108, 0.25);
+  box-shadow: var(--shadow-warm);
+  font-weight: 500;
 }
 
 /* 食材输入 */
@@ -179,8 +204,14 @@
   border-radius: var(--radius-md);
   padding: 18rpx 20rpx;
   font-size: var(--font-size-base);
-  background: var(--color-bg-card);
+  background: #FDFBF9;
   color: var(--color-text-primary);
+  transition: border-color 0.2s ease;
+}
+
+.ingredient-input:focus {
+  border-color: var(--color-primary);
+  background: var(--color-bg-card);
 }
 
 .ingredients-tags {
@@ -192,18 +223,23 @@
 .ingredients-tags .tag {
   position: relative;
   padding: 8rpx 18rpx 8rpx 22rpx;
-  background: #FFF0E8;
+  background: #FAEEE8;
   color: var(--color-primary);
-  border-radius: 20rpx;
+  border-radius: 24rpx;
   font-size: var(--font-size-sm);
   font-weight: 500;
 }
 
 .tag-remove {
   margin-left: 10rpx;
-  cursor: pointer;
-  font-size: var(--font-size-xs);
+  display: inline-flex;
+  align-items: center;
+}
+
+.tag-remove-text {
+  font-size: 18rpx;
   color: var(--color-danger);
+  font-weight: 700;
 }
 
 /* 星级评分 */
@@ -213,10 +249,14 @@
 }
 
 .star {
-  font-size: 38rpx;
+  font-size: 40rpx;
   color: var(--color-divider);
   cursor: pointer;
-  transition: color 0.15s ease;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.star:active {
+  transform: scale(1.2);
 }
 
 .star.active {
@@ -229,7 +269,7 @@
   flex-direction: column;
   gap: 20rpx;
   margin-top: 44rpx;
-  padding: 0 20rpx;
+  padding: 0;
 }
 
 .btn-danger {
@@ -238,6 +278,9 @@
   border: none;
   border-radius: var(--radius-capsule);
   font-weight: 500;
+  height: 84rpx;
+  line-height: 84rpx;
+  font-size: var(--font-size-lg);
 }
 
 .btn-danger::after {
@@ -246,6 +289,7 @@
 
 .btn-danger:active {
   opacity: 0.9;
+  transform: scale(0.97);
 }
 
 /* 删除确认弹窗 */
@@ -265,6 +309,7 @@
   right: 0;
   bottom: 0;
   background: var(--color-bg-mask);
+  animation: fadeIn 0.2s ease;
 }
 
 .dialog-content {
@@ -278,6 +323,7 @@
   width: 82%;
   max-width: 600rpx;
   box-shadow: var(--shadow-lg);
+  animation: fadeIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .dialog-title {
@@ -304,11 +350,6 @@
 
 /* 响应式调整 */
 @media (min-width: 768px) {
-  .page-container {
-    max-width: 600rpx;
-    margin: 0 auto;
-  }
-
   .image-preview,
   .image-upload-btn {
     width: 180rpx;

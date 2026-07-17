@@ -2,7 +2,7 @@
 <view class="container">
   <!-- 未登录提示 -->
   <view wx:if="{{needLogin}}" class="login-prompt card">
-    <text class="login-icon">📊</text>
+    <view class="login-icon-box"><text class="login-icon-text">S</text></view>
     <view class="login-text">请先登录查看统计数据</view>
     <button class="login-btn" bindtap="goToLogin">去登录</button>
   </view>
@@ -43,7 +43,7 @@
       </block>
       
       <view wx:if="{{stats.topDishes.length === 0}}" class="empty-state">
-        <text class="empty-icon">📊</text>
+        <view class="empty-icon-box"><text class="empty-icon-text">S</text></view>
         <view class="empty-text">暂无本周用餐记录</view>
       </view>
     </view>

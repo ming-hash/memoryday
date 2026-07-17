@@ -1,6 +1,6 @@
 <view class="login-container">
   <view class="login-header">
-    <text class="logo">🍽️</text>
+    <view class="logo-box"><text class="logo-text">M</text></view>
     <text class="app-name">今日吃啥</text>
     <text class="app-desc">发现美食，记录生活</text>
   </view>
@@ -71,7 +71,7 @@
     <text class="footer-text">其他登录方式</text>
     <view class="other-login-methods">
       <button class="wechat-login-btn" open-type="getUserInfo" bindgetuserinfo="onWechatLogin">
-        <text class="wechat-icon">💬</text>
+        <view class="wechat-icon-box"><text class="wechat-icon-text">W</text></view>
         <text>微信一键登录</text>
       </button>
     </view>

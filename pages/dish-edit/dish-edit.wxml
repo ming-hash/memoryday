@@ -1,22 +1,25 @@
 <!--pages/dish-edit/dish-edit.wxml-->
 <wxs module="helpers" src="../../utils/wxs/helpers.wxs"></wxs>
 <view class="container">
+  <view class="watercolor-bg"></view>
   <form bindsubmit="submitForm">
     <!-- 图片上传 -->
     <view class="section card">
-      <view class="section-title">菜品图片（1-3张）</view>
+      <view class="section-title">菜品图片</view>
       <view class="image-uploader">
         <block wx:for="{{dish.images}}" wx:key="index">
           <view class="image-preview">
             <image src="{{item}}" class="preview-image" mode="aspectFill"></image>
             <view class="image-remove" bindtap="removeImage" data-index="{{index}}">
-              <text class="image-remove-text">✕</text>
+              <text class="image-remove-text">X</text>
             </view>
           </view>
         </block>
         
         <view wx:if="{{dish.images.length < 3}}" class="image-upload-btn" bindtap="chooseImage">
-          <text class="upload-icon">📷</text>
+          <view class="upload-icon-box">
+            <text class="upload-icon-text">+</text>
+          </view>
           <text class="upload-text">添加图片</text>
         </view>
       </view>
@@ -27,11 +30,11 @@
       <view class="section-title">基本信息</view>
       
       <view class="form-group">
-        <view class="form-label">菜品名称*</view>
+        <view class="form-label">菜品名称 <text class="required">*</text></view>
         <input 
           name="name" 
           value="{{dish.name}}" 
-          placeholder="请输入菜品名称（支持emoji）" 
+          placeholder="请输入菜品名称" 
           class="form-input"
           maxlength="20"
         />
@@ -42,7 +45,7 @@
         <textarea 
           name="description" 
           value="{{dish.description}}" 
-          placeholder="简单描述一下这道菜（可选）" 
+          placeholder="简单描述一下这道菜" 
           class="form-textarea"
           maxlength="100"
         />
@@ -106,7 +109,7 @@
           <view 
             wx:for="{{mealTimeOptions}}" 
             wx:key="value"
-            class="tag {{helpers.includes(dish.mealTime, item.value) ? 'active' : ''}}"
+            class="tag-select {{helpers.includes(dish.mealTime, item.value) ? 'active' : ''}}"
             bindtap="toggleMealTime"
             data-value="{{item.value}}"
           >
@@ -135,7 +138,7 @@
           >
             {{item}}
             <view class="tag-remove" bindtap="removeIngredient" data-index="{{index}}">
-              ×
+              <text class="tag-remove-text">X</text>
             </view>
           </view>
         </view>
@@ -151,7 +154,7 @@
             bindtap="setStarRating"
             data-rating="{{index + 1}}"
           >
-            ★
+            {{index < dish.starRating ? '\u2605' : '\u2606'}}
           </text>
         </view>
       </view>
@@ -165,7 +168,7 @@
       
       <button 
         wx:if="{{mode === 'edit'}}" 
-        class="btn-danger btn-medium" 
+        class="btn-danger" 
         bindtap="showDeleteConfirm"
       >
         删除菜品
@@ -181,7 +184,7 @@
       <view class="dialog-message">确定要删除"{{dish.name}}"吗？此操作不可恢复。</view>
       <view class="dialog-buttons">
         <button class="btn-secondary" bindtap="hideDeleteDialog">取消</button>
-        <button class="btn-primary" bindtap="confirmDelete">确认删除</button>
+        <button class="btn-primary" bindtap="confirmDelete" style="background: var(--color-danger); box-shadow: 0 4rpx 16rpx rgba(212, 96, 90, 0.25);">确认删除</button>
       </view>
     </view>
   </view>

@@ -3,10 +3,10 @@
 .login-container {
   min-height: 100vh;
   background:
-    radial-gradient(ellipse at 20% 10%, rgba(240, 160, 96, 0.25) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 30%, rgba(232, 152, 108, 0.15) 0%, transparent 45%),
-    radial-gradient(ellipse at 40% 85%, rgba(255, 222, 185, 0.2) 0%, transparent 50%),
-    linear-gradient(155deg, #E8986C 0%, #D4885A 35%, #C0784A 70%, #B0683A 100%);
+    radial-gradient(ellipse at 20% 10%, rgba(212, 115, 94, 0.25) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 30%, rgba(232, 153, 122, 0.15) 0%, transparent 45%),
+    radial-gradient(ellipse at 40% 85%, rgba(232, 168, 124, 0.2) 0%, transparent 50%),
+    linear-gradient(155deg, #D4735E 0%, #C06852 35%, #B85A48 70%, #A04E3E 100%);
   padding: 60rpx 40rpx;
   display: flex;
   flex-direction: column;
@@ -19,18 +19,24 @@
   padding-top: 40rpx;
 }
 
-.logo {
+.logo-box {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 130rpx;
   height: 130rpx;
-  font-size: 70rpx;
   margin: 0 auto 32rpx;
-  border-radius: 28rpx;
+  border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.logo-text {
+  font-size: 60rpx;
+  font-weight: 700;
+  color: #fff;
+  font-family: Georgia, 'Times New Roman', serif;
 }
 
 .app-name {
@@ -185,12 +191,26 @@
   gap: 16rpx;
   color: #fff;
   font-size: var(--font-size-md);
+  transition: all 0.2s ease;
 }
 
 .wechat-login-btn:active {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.wechat-icon {
-  font-size: 36rpx;
+.wechat-icon-box {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wechat-icon-text {
+  font-size: 22rpx;
+  font-weight: 700;
+  color: #fff;
+  font-family: Georgia, 'Times New Roman', serif;
 }
