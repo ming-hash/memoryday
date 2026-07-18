@@ -154,7 +154,7 @@
             bindtap="setStarRating"
             data-rating="{{index + 1}}"
           >
-            {{index < dish.starRating ? '\u2605' : '\u2606'}}
+            {{index < dish.starRating ? '★' : '☆'}}
           </text>
         </view>
       </view>

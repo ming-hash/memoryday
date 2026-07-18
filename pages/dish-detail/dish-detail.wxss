@@ -119,7 +119,8 @@
   grid-template-columns: 1fr 1fr;
   gap: 20rpx;
   margin-top: 40rpx;
-  padding: 0 0 40rpx;
+  padding: 0 0 calc(40rpx + constant(safe-area-inset-bottom));
+  padding: 0 0 calc(40rpx + env(safe-area-inset-bottom));
 }
 
 .action-buttons .btn-secondary:last-child {

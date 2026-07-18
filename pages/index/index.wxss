@@ -3,6 +3,7 @@
 /* 页面容器 */
 .container {
   position: relative;
+  padding: 24rpx 28rpx calc(180rpx + constant(safe-area-inset-bottom));
   padding: 24rpx 28rpx calc(180rpx + env(safe-area-inset-bottom));
   min-height: 100vh;
   box-sizing: border-box;
@@ -248,6 +249,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  padding-bottom: calc(20rpx + constant(safe-area-inset-bottom));
   padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
   background: linear-gradient(to top, rgba(253, 248, 243, 0.95) 60%, transparent);
   z-index: 99;

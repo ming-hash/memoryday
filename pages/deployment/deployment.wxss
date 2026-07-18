@@ -1,7 +1,8 @@
 /* pages/deployment/deployment.wxss - 有机自然美食风 */
 
 .deployment-page {
-  padding: 24rpx 28rpx;
+  padding: 24rpx 28rpx calc(28rpx + constant(safe-area-inset-bottom));
+  padding: 24rpx 28rpx calc(28rpx + env(safe-area-inset-bottom));
   min-height: 100vh;
   background: var(--color-bg-page);
 }

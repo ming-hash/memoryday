@@ -45,7 +45,8 @@
 .page-container {
   background: var(--color-bg-page);
   min-height: 100vh;
-  padding-bottom: 40rpx;
+  padding-bottom: calc(40rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
 }
 
 .stats-overview {

@@ -7,7 +7,8 @@
     radial-gradient(ellipse at 80% 30%, rgba(232, 153, 122, 0.15) 0%, transparent 45%),
     radial-gradient(ellipse at 40% 85%, rgba(232, 168, 124, 0.2) 0%, transparent 50%),
     linear-gradient(155deg, #D4735E 0%, #C06852 35%, #B85A48 70%, #A04E3E 100%);
-  padding: 60rpx 40rpx;
+  padding: 60rpx 40rpx calc(40rpx + constant(safe-area-inset-bottom));
+  padding: 60rpx 40rpx calc(40rpx + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   justify-content: space-between;

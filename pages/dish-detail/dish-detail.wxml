@@ -19,7 +19,7 @@
       <view class="dish-name">{{dish.name}}</view>
       <view class="star-rating">
         <text wx:for="{{[1,2,3,4,5]}}" wx:key="index" class="star {{index < dish.starRating ? 'star-filled' : 'star-empty'}}">
-          {{index < dish.starRating ? '\u2605' : '\u2606'}}
+          {{index < dish.starRating ? '★' : '☆'}}
         </text>
       </view>
     </view>
