@@ -1,6 +1,7 @@
 // services/cosService.js - 腾讯云COS存储服务
 
 const { getCosConfig } = require('../config/cos')
+const StorageService = require('./storage')
 const app = getApp()
 
 /**
@@ -41,9 +42,9 @@ class CosService {
       // 调用后端API获取STS token（注意：URL末尾要有斜杠）
       const response = await app.request('/cos/sts-token/', {}, 'POST')
       
-      if (response && response.data) {
-        this.stsToken = response.data
-        this.tokenExpireTime = now + response.data.expiredTime * 1000
+      if (response) {
+        this.stsToken = response
+        this.tokenExpireTime = now + (response.expiredTime || 1800) * 1000
         
         console.log('STS token获取成功，有效期至:', new Date(this.tokenExpireTime).toLocaleString())
         return this.stsToken
@@ -157,7 +158,7 @@ class CosService {
     try {
       const app = getApp()
       const baseUrl = app.globalData.baseUrl || 'http://1.14.61.155/api'
-      const token = wx.getStorageSync('token')
+      const token = StorageService.getToken()
 
       return new Promise((resolve, reject) => {
         wx.uploadFile({
@@ -278,8 +279,8 @@ class CosService {
         style: options.thumbnail ? 'thumbnail' : options.preview ? 'preview' : 'original'
       }, 'POST')
       
-      if (response && response.data && response.data.url) {
-        return response.data.url
+      if (response && response.url) {
+        return response.url
       }
       
       // 如果后端签名失败，返回无签名URL（会显示403错误）
@@ -328,8 +329,8 @@ class CosService {
         style: options.style || 'original'
       }, 'POST')
       
-      if (response && response.data && response.data.urls) {
-        return response.data.urls
+      if (response && response.urls) {
+        return response.urls
       }
       
       console.warn('批量获取签名URL失败，返回无签名URL')

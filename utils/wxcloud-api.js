@@ -1,6 +1,8 @@
 // utils/wxcloud-api.js
 // 微信云托管专用API封装
 
+const StorageService = require('../services/storage')
+
 function getAppInstance() {
   return getApp()
 }
@@ -39,7 +41,7 @@ class WxCloudApiClient {
       method: method,
       header: {
         'Content-Type': 'application/json',
-        'Authorization': wx.getStorageSync('token') ? `Bearer ${wx.getStorageSync('token')}` : '',
+        'Authorization': StorageService.getToken() ? `Bearer ${StorageService.getToken()}` : '',
         ...headers
       },
       data: data,
@@ -73,7 +75,7 @@ class WxCloudApiClient {
     
     if (error.statusCode === 401) {
       // token过期，跳转到登录页
-      wx.removeStorageSync('token')
+      StorageService.removeToken()
       wx.reLaunch({
         url: '/pages/login/login'
       })

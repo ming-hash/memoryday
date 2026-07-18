@@ -179,7 +179,7 @@ App({
   // 调用本地API
   callLocalApi(url, data = {}, method = 'GET', complete) {
     return new Promise((resolve, reject) => {
-      const token = wx.getStorageSync('token')
+      const token = StorageService.getToken()
       const headers = {
         'Content-Type': 'application/json'
       }

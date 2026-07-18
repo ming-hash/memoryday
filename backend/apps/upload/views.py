@@ -45,21 +45,41 @@ def upload_file(request):
         filename = f"{uuid.uuid4().hex}{file_ext}"
         
         # 保存文件
-        file_path = default_storage.save(f"uploads/{filename}", ContentFile(file.read()))
+        relative_path = f"uploads/{filename}"
+        file_path = default_storage.save(relative_path, ContentFile(file.read()))
+        
+        # 确定文件类型分类
+        content_type = file.content_type
+        if content_type.startswith('image/'):
+            file_type = 'image'
+        elif content_type.startswith('video/'):
+            file_type = 'video'
+        elif content_type.startswith('audio/'):
+            file_type = 'audio'
+        else:
+            file_type = 'other'
+        
+        # 构建文件URL（返回相对路径，小程序端会自动补全为绝对URL）
+        file_url = default_storage.url(file_path)
         
         # 创建上传记录
         uploaded_file = UploadedFile.objects.create(
             user=user,
             original_name=file.name,
             file_name=filename,
-            file_path=file_path,
+            file_type=file_type,
             file_size=file.size,
-            content_type=file.content_type,
-            upload_type=request.data.get('upload_type', 'dish_image')
+            mime_type=content_type,
+            file_extension=file_ext.lstrip('.'),
+            storage_path=file_path,
+            storage_provider='local',
+            storage_url=file_url,
+            status='completed',
+            metadata={
+                'upload_type': request.data.get('upload_type', 'dish_image'),
+                'original_content_type': file.content_type
+            }
         )
-        
-        # 构建文件URL
-        file_url = default_storage.url(file_path)
         
         return Response({
             'id': uploaded_file.id,
@@ -86,14 +106,16 @@ def user_uploads(request):
     
     result = []
     for upload in uploads:
+        file_url = upload.storage_url or default_storage.url(upload.storage_path)
         result.append({
             'id': upload.id,
             'original_name': upload.original_name,
             'file_name': upload.file_name,
-            'file_url': default_storage.url(upload.file_path),
+            'file_url': file_url,
             'file_size': upload.file_size,
-            'content_type': upload.content_type,
-            'upload_type': upload.upload_type,
+            'mime_type': upload.mime_type,
+            'file_type': upload.file_type,
+            'upload_type': upload.metadata.get('upload_type', '') if upload.metadata else '',
             'uploaded_at': upload.created_at
         })
     
@@ -108,8 +130,8 @@ def delete_upload(request, file_id):
         uploaded_file = UploadedFile.objects.get(id=file_id, user=request.user)
         
         # 删除物理文件
-        if default_storage.exists(uploaded_file.file_path):
-            default_storage.delete(uploaded_file.file_path)
+        if default_storage.exists(uploaded_file.storage_path):
+            default_storage.delete(uploaded_file.storage_path)
         
         # 删除数据库记录
         uploaded_file.delete()

@@ -6,52 +6,27 @@
   </view>
 
   <view class="login-content">
-    <view class="login-form" wx:if="{{!isLoading}}">
-      <view class="form-group">
-        <text class="label">手机号</text>
-        <input 
-          class="input" 
-          type="number" 
-          placeholder="请输入手机号" 
-          value="{{phone}}" 
-          bindinput="onPhoneInput"
-          maxlength="11"
-        />
-      </view>
+    <view class="login-card">
+      <text class="welcome-title">欢迎回来</text>
+      <text class="welcome-desc">一键微信登录，开启美食之旅</text>
 
-      <view class="form-group">
-        <text class="label">验证码</text>
-        <view class="code-input-group">
-          <input 
-            class="input code-input" 
-            type="number" 
-            placeholder="请输入验证码" 
-            value="{{code}}" 
-            bindinput="onCodeInput"
-            maxlength="6"
-          />
-          <button 
-            class="send-code-btn" 
-            bindtap="onSendCode"
-            disabled="{{isSendingCode}}"
-            loading="{{isSendingCode}}"
-          >
-            {{codeCountdown > 0 ? codeCountdown + 's' : '获取验证码'}}
-          </button>
-        </view>
-      </view>
-
-      <button 
-        class="login-btn" 
-        bindtap="onLogin"
+      <button
+        class="wechat-login-btn"
+        bindtap="onWechatLogin"
+        disabled="{{isLoggingIn}}"
         loading="{{isLoggingIn}}"
       >
-        登录/注册
+        <image
+          class="wechat-icon"
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFFFFF'%3E%3Cpath d='M8.5 11.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm7 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm-3.5 7c-1.5 0-2.9-.3-4.2-.8l-3.2 1.3.8-2.8C3.9 15.3 3 13.7 3 12c0-4.4 4-8 9-8s9 3.6 9 8-4 8-9 8z'/%3E%3C/svg%3E"
+          mode="aspectFit"
+        />
+        <text>微信一键登录</text>
       </button>
 
       <view class="agreement">
-        <checkbox 
-          class="agreement-checkbox" 
+        <checkbox
+          class="agreement-checkbox"
           checked="{{agreed}}"
           bindtap="onAgreementChange"
         />
@@ -63,17 +38,11 @@
         </text>
       </view>
     </view>
-
-    <loading wx:if="{{isLoading}}" text="登录中..." />
   </view>
 
   <view class="login-footer">
-    <text class="footer-text">其他登录方式</text>
-    <view class="other-login-methods">
-      <button class="wechat-login-btn" open-type="getUserInfo" bindgetuserinfo="onWechatLogin">
-        <view class="wechat-icon-box"><text class="wechat-icon-text">W</text></view>
-        <text>微信一键登录</text>
-      </button>
-    </view>
+    <text class="footer-text">
+      登录即表示您同意我们的服务条款
+    </text>
   </view>
 </view>

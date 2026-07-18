@@ -6,6 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.core.cache import cache
 import requests
 import random
+import os
 
 from .models import User
 from .serializers import UserSerializer, UserRegistrationSerializer, UserLoginSerializer, WechatLoginSerializer
@@ -15,6 +16,15 @@ from .serializers import UserSerializer, UserRegistrationSerializer, UserLoginSe
 @permission_classes([permissions.AllowAny])
 def send_sms_code(request):
     """发送短信验证码（开发环境简化版本）"""
+    from django.conf import settings as django_settings
+    
+    # 检查 SMS 登录是否被禁用
+    if getattr(django_settings, 'DISABLE_SMS_LOGIN', False):
+        return Response(
+            {'error': '短信验证码登录已关闭，请使用微信登录'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+    
     phone = request.data.get('phone')
     
     if not phone:
@@ -35,7 +45,7 @@ def send_sms_code(request):
     
     return Response({
         'message': '验证码已发送',
-        'code': code if __import__('os').environ.get('DEBUG', 'True').lower() == 'true' else None,
+        'code': code if os.environ.get('DEBUG', 'True').lower() == 'true' else None,
         'expire': 300
     })
 
@@ -76,31 +86,80 @@ def register_user(request):
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def login_user(request):
-    """用户登录"""
+    """用户登录（支持密码登录和短信验证码登录）"""
+    from django.conf import settings as django_settings
+    
     serializer = UserLoginSerializer(data=request.data)
-    if serializer.is_valid():
-        phone = serializer.validated_data['username']
-        password = serializer.validated_data['password']
-        
-        # 使用 phone 字段查找用户
-        try:
-            user = User.objects.get(phone=phone)
-            if user.check_password(password):
-                refresh = RefreshToken.for_user(user)
-                return Response({
-                    'user': UserSerializer(user).data,
-                    'refresh': str(refresh),
-                    'access': str(refresh.access_token),
-                })
-        except User.DoesNotExist:
-            pass
-        
+    if not serializer.is_valid():
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    phone = serializer.validated_data['username']
+    password = serializer.validated_data['password']
+    
+    # 检查密码登录是否被禁用
+    if getattr(django_settings, 'DISABLE_PASSWORD_LOGIN', False):
+        # 尝试用 SMS 验证码（密码字段可能传的是验证码）
+        cached_code = cache.get(f'sms_code:{phone}')
+        if not cached_code or password != cached_code:
+            return Response(
+                {'error': '密码登录已关闭，请使用微信登录'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        # 如果 SMS 也被禁用，直接拒绝
+        if getattr(django_settings, 'DISABLE_SMS_LOGIN', False):
+            return Response(
+                {'error': '密码登录和短信登录均已关闭，请使用微信登录'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+    # 使用 phone 字段查找用户
+    try:
+        user = User.objects.get(phone=phone)
+    except User.DoesNotExist:
         return Response(
-            {'error': '用户名或密码错误'}, 
+            {'error': '用户名或密码错误'},
+            status=status.HTTP_401_UNAUTHORIZED
+        )
+
+    if not user.is_active:
+        return Response(
+            {'error': '用户账户已禁用'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    # 1. 先尝试密码验证
+    if user.check_password(password):
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'user': UserSerializer(user).data,
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        })
+
+    # 检查 SMS 登录是否被禁用
+    if getattr(django_settings, 'DISABLE_SMS_LOGIN', False):
+        # 如果 SMS 禁用且密码不匹配，直接返回错误，不再尝试 SMS
+        return Response(
+            {'error': '用户名或密码错误'},
             status=status.HTTP_401_UNAUTHORIZED
         )
     
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # 2. 再尝试短信验证码验证
+    cached_code = cache.get(f'sms_code:{phone}')
+    if cached_code and password == cached_code:
+        refresh = RefreshToken.for_user(user)
+        # 验证成功后清除验证码
+        cache.delete(f'sms_code:{phone}')
+        return Response({
+            'user': UserSerializer(user).data,
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        })
+
+    return Response(
+        {'error': '用户名或密码错误'},
+        status=status.HTTP_401_UNAUTHORIZED
+    )
 
 
 @api_view(['POST'])
@@ -132,8 +191,8 @@ def wechat_login(request):
     code = serializer.validated_data['code']
     
     # 获取微信配置
-    appid = getattr(django_settings, 'WECHAT_APPID', '') or __import__('os').environ.get('WECHAT_APPID', '')
-    secret = getattr(django_settings, 'WECHAT_SECRET', '') or __import__('os').environ.get('WECHAT_SECRET', '')
+    appid = getattr(django_settings, 'WECHAT_APPID', '') or os.environ.get('WECHAT_APPID', '')
+    secret = getattr(django_settings, 'WECHAT_SECRET', '') or os.environ.get('WECHAT_SECRET', '')
     
     if not appid or not secret:
         return Response(

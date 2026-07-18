@@ -4,13 +4,9 @@ const app = getApp()
 
 Page({
   data: {
-    phone: '',
-    code: '',
-    isSendingCode: false,
-    isLoggingIn: false,
     isLoading: false,
-    codeCountdown: 0,
-    agreed: false
+    agreed: false,
+    isLoggingIn: false
   },
 
   onLoad() {
@@ -21,18 +17,6 @@ Page({
         url: '/pages/index/index'
       })
     }
-  },
-
-  onPhoneInput(e) {
-    this.setData({
-      phone: e.detail.value.replace(/\D/g, '')
-    })
-  },
-
-  onCodeInput(e) {
-    this.setData({
-      code: e.detail.value.replace(/\D/g, '')
-    })
   },
 
   onAgreementChange() {
@@ -57,109 +41,16 @@ Page({
     })
   },
 
-  async onSendCode() {
-    if (this.data.isSendingCode || this.data.codeCountdown > 0) return
-
-    const phone = this.data.phone.trim()
-    if (!phone) {
-      wx.showToast({ title: '请输入手机号', icon: 'none' })
-      return
-    }
-
-    if (!/^1[3-9]\d{9}$/.test(phone)) {
-      wx.showToast({ title: '请输入正确的手机号', icon: 'none' })
-      return
-    }
-
-    this.setData({ isSendingCode: true })
-
-    try {
-      // 调用后端发送验证码API（待实现短信服务，暂时模拟）
-      await app.request('/auth/send-sms-code/', { phone }, 'POST')
-
-      wx.showToast({ title: '验证码已发送', icon: 'success' })
-      this.startCountdown()
-    } catch (error) {
-      console.error('发送验证码失败:', error)
-      wx.showToast({ title: '发送失败，请重试', icon: 'none' })
-    } finally {
-      this.setData({ isSendingCode: false })
-    }
-  },
-
-  startCountdown() {
-    this.setData({ codeCountdown: 60 })
-
-    const timer = setInterval(() => {
-      if (this.data.codeCountdown <= 1) {
-        clearInterval(timer)
-        this.setData({ codeCountdown: 0 })
-        return
-      }
-      this.setData({ codeCountdown: this.data.codeCountdown - 1 })
-    }, 1000)
-  },
-
-  async onLogin() {
-    if (!this.data.agreed) {
-      wx.showToast({ title: '请先同意协议', icon: 'none' })
-      return
-    }
-
-    const phone = this.data.phone.trim()
-    const code = this.data.code.trim()
-
-    if (!phone) {
-      wx.showToast({ title: '请输入手机号', icon: 'none' })
-      return
-    }
-
-    if (!code) {
-      wx.showToast({ title: '请输入验证码', icon: 'none' })
-      return
-    }
-
-    this.setData({ isLoggingIn: true })
-
-    try {
-      // 调用后端手机号+验证码登录
-      const res = await app.request('/auth/login/', {
-        username: phone,
-        password: code  // 短信验证码作为临时密码
-      }, 'POST')
-
-      if (res && res.access) {
-        // 存储JWT token和用户信息
-        StorageService.setToken(res.access)
-        StorageService.setUserInfo(res.user)
-        app.globalData.userInfo = res.user
-
-        wx.showToast({ title: '登录成功', icon: 'success' })
-
-        setTimeout(() => {
-          wx.switchTab({ url: '/pages/index/index' })
-        }, 1000)
-      } else {
-        wx.showToast({ title: '登录失败', icon: 'none' })
-      }
-    } catch (error) {
-      console.error('手机号登录失败:', error)
-      wx.showToast({ title: '登录失败，请重试', icon: 'none' })
-    } finally {
-      this.setData({ isLoggingIn: false })
-    }
-  },
-
   async onWechatLogin() {
     if (!this.data.agreed) {
       wx.showToast({ title: '请先同意协议', icon: 'none' })
       return
     }
 
-    this.setData({ isLoading: true })
+    this.setData({ isLoggingIn: true, isLoading: true })
 
     try {
-      // 1. 调用wx.login获取code
+      // 1. 调用 wx.login 获取临时 code
       const loginRes = await new Promise((resolve, reject) => {
         wx.login({
           success: resolve,
@@ -172,14 +63,17 @@ Page({
         return
       }
 
-      // 2. 将code发送到后端，换取JWT
+      // 2. 将 code 发送到后端，换取 JWT
       const res = await app.request('/auth/wechat-login/', {
         code: loginRes.code
       }, 'POST')
 
       if (res && res.access) {
-        // 3. 存储JWT token和用户信息
+        // 3. 存储 JWT token 和用户信息
         StorageService.setToken(res.access)
+        if (res.refresh) {
+          StorageService.set('refresh_token', res.refresh)
+        }
         StorageService.setUserInfo(res.user)
         app.globalData.userInfo = res.user
 
@@ -195,7 +89,7 @@ Page({
       console.error('微信登录失败:', error)
       wx.showToast({ title: '微信登录失败，请重试', icon: 'none' })
     } finally {
-      this.setData({ isLoading: false })
+      this.setData({ isLoggingIn: false, isLoading: false })
     }
   }
 })

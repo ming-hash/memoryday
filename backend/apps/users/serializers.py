@@ -44,20 +44,14 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField()
 
     def validate(self, data):
-        """验证用户登录"""
+        """验证登录参数字段"""
         username = data.get('username')
         password = data.get('password')
 
-        if username and password:
-            user = authenticate(username=username, password=password)
-            if user:
-                if user.is_active:
-                    data['user'] = user
-                    return data
-                raise serializers.ValidationError('用户账户已禁用')
-            raise serializers.ValidationError('用户名或密码错误')
+        if not username or not password:
+            raise serializers.ValidationError('必须提供用户名和密码')
         
-        raise serializers.ValidationError('必须提供用户名和密码')
+        return data
 
 
 class WechatLoginSerializer(serializers.Serializer):

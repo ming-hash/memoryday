@@ -1,5 +1,6 @@
 // utils/api.js
 const getCosService = require('../services/cosService')
+const StorageService = require('../services/storage')
 
 function getAppInstance() {
   return getApp()
@@ -28,7 +29,7 @@ class ApiClient {
     } = options
 
     const fullUrl = `${this.baseURL}${url}`
-    const token = wx.getStorageSync('token')
+    const token = StorageService.getToken()
 
     const requestOptions = {
       url: fullUrl,
@@ -69,7 +70,7 @@ class ApiClient {
     
     if (error.statusCode === 401) {
       // token过期，跳转到登录页
-      wx.removeStorageSync('token')
+      StorageService.removeToken()
       wx.reLaunch({
         url: '/pages/login/login'
       })
@@ -193,7 +194,7 @@ class ApiClient {
             name: 'file',
             formData: formData,
             header: {
-              'Authorization': `Bearer ${wx.getStorageSync('token')}`
+              'Authorization': `Bearer ${StorageService.getToken()}`
             },
             success: (res) => {
               try {

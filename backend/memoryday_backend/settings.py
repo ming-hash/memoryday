@@ -244,10 +244,14 @@ CORS_ALLOW_CREDENTIALS = True
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 
+# 认证方式开关（生产环境关闭密码/SMS登录，仅保留微信登录）
+DISABLE_PASSWORD_LOGIN = env.bool('DISABLE_PASSWORD_LOGIN', default=False)
+DISABLE_SMS_LOGIN = env.bool('DISABLE_SMS_LOGIN', default=False)
+
 # 缓存配置
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': env('REDIS_URL', default='redis://localhost:6379/0'),
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',

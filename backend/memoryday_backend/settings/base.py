@@ -190,6 +190,10 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
+# 认证方式开关（生产环境建议关闭密码/SMS登录，仅保留微信登录）
+DISABLE_PASSWORD_LOGIN = env.bool('DISABLE_PASSWORD_LOGIN', default=False)
+DISABLE_SMS_LOGIN = env.bool('DISABLE_SMS_LOGIN', default=False)
+
 # 自定义用户模型
 AUTH_USER_MODEL = 'users.User'
 
