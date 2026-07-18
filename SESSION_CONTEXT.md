@@ -7,7 +7,7 @@
 
 ### 步骤 1: 检查服务器日志
 ```bash
-ssh root@1.14.61.155
+ssh root@your-server-ip
 docker logs memoryday-backend --tail 100
 docker logs memoryday-nginx --tail 50
 ```
@@ -48,8 +48,8 @@ from apps.users.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
 user = User.objects.create_user(
-    phone='13800138000',
-    password='test123456',
+    phone='your-test-phone',
+    password='your-test-password',
     nickname='测试用户',
     is_active=True
 )
@@ -65,7 +65,7 @@ print('Access Token:', str(refresh.access_token))
 # 先登录获取 token
 curl -s -X POST http://localhost/api/auth/login/ \
   -H 'Content-Type: application/json' \
-  -d '{"username":"13800138000","password":"test123456"}'
+  -d '{"username":"your-test-phone","password":"your-test-password"}'
 ```
 
 **发现四**: 上传接口返回 **500 错误**，`UploadedFile` 模型字段名与视图代码不匹配。视图使用了 `file_path`、`content_type` 等字段，但模型中实际字段名为 `storage_path`、`mime_type` 等。
@@ -126,7 +126,7 @@ curl http://localhost/api/health/ → 200 {"status":"healthy",...}
 # ✅ 登录（使用 username + password 字段）
 curl -X POST http://localhost/api/auth/login/ \
   -H 'Content-Type: application/json' \
-  -d '{"username":"13800138000","password":"test123456"}'
+  -d '{"username":"your-test-phone","password":"your-test-password"}'
 → 返回 access 和 refresh token
 
 # ✅ 上传图片（需 Bearer token）
@@ -138,15 +138,15 @@ curl -X POST http://localhost/api/upload/upload/ \
 
 # ✅ 通过 Nginx 访问上传的图片
 curl -s -o /dev/null -w "HTTP: %{http_code}, Size: %{size_download} bytes\n" \
-  http://1.14.61.155/media/uploads/<filename>.jpg
+  http://your-server-ip/media/uploads/<filename>.jpg
 → HTTP: 200
 ```
 
 ## 测试用户凭证
 | 字段 | 值 |
 |------|-----|
-| **手机号** | `13800138000` |
-| **密码** | `test123456` |
+| **手机号** | `your-test-phone` |
+| **密码** | `your-test-password` |
 | **昵称** | 测试用户 |
 
 ## 待完成任务
@@ -186,7 +186,7 @@ curl -s -o /dev/null -w "HTTP: %{http_code}, Size: %{size_download} bytes\n" \
 
 ```bash
 # SSH 登录
-ssh root@1.14.61.155  # 密码: uos@12345
+ssh root@your-server-ip  # 密码: your-ssh-password
 
 # 进入后端容器
 docker exec -it memoryday-backend bash

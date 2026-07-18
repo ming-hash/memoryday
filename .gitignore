@@ -5,7 +5,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # 开发工具生成的文件
-project.config.json
 project.private.config.json
 *.workspace
 
@@ -28,6 +27,9 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+
+# 但 backend/.env 模板需要提交到仓库（已脱敏）
+!backend/.env
 
 # IDE
 .vscode/
