@@ -1,0 +1,114 @@
+# MemoryDay 生产环境部署配置
+services:
+  # 后端 API 服务
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: memoryday-backend
+    restart: unless-stopped
+    expose:
+      - "8000"
+    volumes:
+      - ./backend/logs:/app/logs
+      - ./backend/static:/app/static
+      - ./backend/media:/app/media
+      - ./backend/.env:/app/.env:ro
+    environment:
+      - DJANGO_SETTINGS_MODULE=memoryday_backend.settings.production
+      - DEPLOYMENT_MODE=production
+      - LOG_LEVEL=info
+      - GUNICORN_WORKERS=4
+      - MYSQL_HOST=db
+      - REDIS_HOST=redis
+      - SECURE_SSL_REDIRECT=False
+      - SESSION_COOKIE_SECURE=False
+      - CSRF_COOKIE_SECURE=False
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - memoryday-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  # MySQL 数据库
+  db:
+    image: mysql:8.0
+    container_name: memoryday-db
+    restart: unless-stopped
+    expose:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./backend/docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - memoryday-network
+    command: |
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Redis 缓存
+  redis:
+    image: redis:7-alpine
+    container_name: memoryday-redis
+    restart: unless-stopped
+    expose:
+      - "6379"
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    networks:
+      - memoryday-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Nginx 反向代理
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: memoryday-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./backend/docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./backend/docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./backend/static:/app/static:ro
+      - ./backend/media:/app/media:ro
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - memoryday-network
+
+volumes:
+  db_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  memoryday-network:
+    driver: bridge

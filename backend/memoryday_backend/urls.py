@@ -17,9 +17,20 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import JsonResponse
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+
+
+def health_check(request):
+    """健康检查接口"""
+    from datetime import datetime
+    return JsonResponse({
+        'status': 'healthy',
+        'timestamp': datetime.now().isoformat(),
+        'service': 'memoryday-backend'
+    })
 
 # API文档配置
 schema_view = get_schema_view(
@@ -38,6 +49,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     # Django管理后台
     path('admin/', admin.site.urls),
+    
+    # 健康检查
+    path('api/health/', health_check, name='health-check'),
     
     # API文档
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
