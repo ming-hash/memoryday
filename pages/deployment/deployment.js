@@ -18,6 +18,13 @@ Page({
         enabled: true
       },
       {
+        name: 'server',
+        title: '远程服务器',
+        description: '连接自建服务器（1.14.61.155）',
+        apiUrl: 'http://1.14.61.155/api',
+        enabled: true
+      },
+      {
         name: 'cloudbase',
         title: '腾讯云CloudBase',
         description: '云端部署，无需管理服务器',
@@ -68,7 +75,8 @@ Page({
     wx.setStorageSync('deploymentConfig', {
       mode: mode,
       baseUrl: option.apiUrl,
-      useCloudBase: mode === 'cloudbase'
+      useCloudBase: mode === 'cloudbase',
+      switchTime: Date.now()
     })
 
     this.setData({

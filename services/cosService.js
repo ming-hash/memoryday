@@ -141,7 +141,75 @@ class CosService {
       })
       
     } catch (error) {
-      console.error('上传图片失败:', error)
+      console.error('COS上传失败，尝试使用本地服务上传:', error)
+      // 降级方案：使用本地 Django 上传 API
+      return this.uploadImageToLocal(filePath, folder)
+    }
+  }
+
+  /**
+   * 上传图片到本地 Django 后端（COS 降级方案）
+   * @param {string} filePath 本地文件路径
+   * @param {string} folder 文件夹（用于记录）
+   * @returns {Promise} 上传结果
+   */
+  async uploadImageToLocal(filePath, folder = 'images') {
+    try {
+      const app = getApp()
+      const baseUrl = app.globalData.baseUrl || 'http://1.14.61.155/api'
+      const token = wx.getStorageSync('token')
+
+      return new Promise((resolve, reject) => {
+        wx.uploadFile({
+          url: baseUrl + '/upload/upload/',
+          filePath: filePath,
+          name: 'file',
+          header: {
+            'Authorization': token ? 'Bearer ' + token : ''
+          },
+          formData: {
+            upload_type: folder === 'dish_images' ? 'dish_image' : 'other'
+          },
+          success: (res) => {
+            if (res.statusCode === 200) {
+              try {
+                const data = JSON.parse(res.data)
+                console.log('本地上传成功:', data)
+                // 后端返回的 file_url 是相对路径 (/media/...), 需要转为绝对URL
+                const serverRoot = baseUrl.replace('/api', '')
+                const absoluteUrl = data.file_url.startsWith('http')
+                  ? data.file_url
+                  : serverRoot + data.file_url
+                resolve({
+                  success: true,
+                  url: absoluteUrl,
+                  key: data.file_name,
+                  fileName: data.file_name,
+                  localUpload: true,
+                  uploadId: data.id
+                })
+              } catch (e) {
+                reject(new Error('解析上传响应失败: ' + res.data))
+              }
+            } else if (res.statusCode === 401) {
+              reject(new Error('未登录，请先登录'))
+            } else {
+              try {
+                const errData = JSON.parse(res.data)
+                reject(new Error(errData.error || '上传失败(' + res.statusCode + ')'))
+              } catch (e) {
+                reject(new Error('上传失败(' + res.statusCode + ')'))
+              }
+            }
+          },
+          fail: (err) => {
+            console.error('本地上传网络请求失败:', err)
+            reject(new Error('网络请求失败，请检查服务器连接'))
+          }
+        })
+      })
+    } catch (error) {
+      console.error('本地上传失败:', error)
       throw error
     }
   }

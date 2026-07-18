@@ -39,11 +39,11 @@ App({
   globalData: {
     userInfo: null,
     env: {},
-    baseUrl: 'http://localhost:8000/api', // 初始化时先设置为开发环境，后续在onLaunch中更新
+    baseUrl: 'http://1.14.61.155/api', // 远程服务器生产环境
     useCloudBase: false, // 是否使用腾讯云CloudBase
     cloudBaseEnv: '', // CloudBase环境ID
     deploymentMode: 'local-dev', // 部署模式：local-dev, local, cloudbase
-    localApiUrl: 'http://localhost:8000/api', // 本地API地址
+    localApiUrl: 'http://1.14.61.155/api', // 远程服务器API地址
     dishes: [],
     filters: {
       mealTime: null,
@@ -360,9 +360,9 @@ App({
       
     } catch (error) {
       console.error('部署配置初始化失败:', error)
-      // 使用默认配置
-      this.globalData.deploymentMode = 'local-dev'
-      this.globalData.baseUrl = 'http://localhost:8000/api'
+      // 使用默认配置（远程服务器）
+      this.globalData.deploymentMode = 'server'
+      this.globalData.baseUrl = 'http://1.14.61.155/api'
       this.globalData.useCloudBase = false
     }
   },

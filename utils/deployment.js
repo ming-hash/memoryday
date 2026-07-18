@@ -33,6 +33,15 @@ const DEPLOYMENT_CONFIGS = {
     cloudBaseEnv: 'whateatday-0gor3cwl4f527bba',
     enabled: true,
     priority: 3
+  },
+  'server': {
+    name: 'server',
+    title: '远程服务器',
+    description: '连接自建服务器（1.14.61.155）',
+    apiUrl: 'http://1.14.61.155/api',
+    useCloudBase: false,
+    enabled: true,
+    priority: 4
   }
 }
 
@@ -62,8 +71,8 @@ function detectBestDeployment() {
     return savedConfig.mode
   }
   
-  // 默认使用本地开发环境
-  return 'local-dev'
+  // 默认使用远程服务器（生产环境）
+  return 'server'
 }
 
 /**

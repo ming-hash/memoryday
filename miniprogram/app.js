@@ -27,7 +27,7 @@ App({
       selfServer: {
         // IP+端口模式
         ip: {
-          baseUrl: 'http://你的服务器IP:8000/api',
+          baseUrl: 'http://1.14.61.155/api',
         },
         // 域名模式
         domain: {

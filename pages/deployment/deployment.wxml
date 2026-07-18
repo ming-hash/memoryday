@@ -69,6 +69,7 @@
     <view class="info-content">
       <text class="info-item">• 本地开发环境：适合开发调试，使用Docker容器</text>
       <text class="info-item">• 本地生产环境：完整生产环境部署</text>
+      <text class="info-item">• 远程服务器：连接自建服务器（1.14.61.155）</text>
       <text class="info-item">• 腾讯云CloudBase：云端部署，无需管理服务器</text>
       <text class="info-item">• 切换部署模式后需要重启小程序生效</text>
     </view>
