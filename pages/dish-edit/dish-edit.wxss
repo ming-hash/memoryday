@@ -192,27 +192,35 @@
   font-weight: 500;
 }
 
-/* 食材输入 */
-.ingredients-input {
-  display: flex;
-  gap: 12rpx;
+/* 食材选择提示 */
+.ingredients-tip {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-placeholder);
   margin-bottom: 16rpx;
 }
 
-.ingredient-input {
-  flex: 1;
-  border: 2rpx solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 18rpx 20rpx;
-  font-size: var(--font-size-base);
-  background: #FDFBF9;
-  color: var(--color-text-primary);
-  transition: border-color 0.2s ease;
+/* 可折叠标题 */
+.label-collapsible {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
-.ingredient-input:focus {
-  border-color: var(--color-primary);
-  background: var(--color-bg-card);
+.label-count {
+  margin-left: 14rpx;
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  color: var(--color-primary);
+  background: #FAEEE8;
+  padding: 2rpx 14rpx;
+  border-radius: 20rpx;
+}
+
+.label-arrow {
+  margin-left: auto;
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  color: var(--color-text-placeholder);
 }
 
 .ingredients-tags {

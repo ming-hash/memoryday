@@ -53,7 +53,6 @@ Page({
       ingredients: [],
       starRating: 0
     },
-    newIngredient: '',
     showDeleteDialog: false,
     isUploading: false,
     isSaving: false,
@@ -306,26 +305,6 @@ Page({
     }
     
     this.setData({ 'dish.mealTime': mealTime })
-  },
-
-  // 食材输入
-  onIngredientInput(e) {
-    this.setData({ newIngredient: e.detail.value })
-  },
-
-  // 添加食材
-  addIngredient() {
-    const ingredient = this.data.newIngredient.trim()
-    if (!ingredient) return
-    
-    const ingredients = [...this.data.dish.ingredients]
-    if (!ingredients.includes(ingredient)) {
-      ingredients.push(ingredient)
-      this.setData({
-        'dish.ingredients': ingredients,
-        newIngredient: ''
-      })
-    }
   },
 
   // 移除食材

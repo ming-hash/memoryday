@@ -119,21 +119,15 @@
       </view>
 
       <view class="form-group">
-        <view class="form-label">食材标签</view>
-        <view class="ingredients-input">
-          <input 
-            value="{{newIngredient}}" 
-            placeholder="输入食材后按回车添加" 
-            class="ingredient-input"
-            bindinput="onIngredientInput"
-            bindconfirm="addIngredient"
-          />
-          <button class="btn-secondary btn-small" bindtap="addIngredient">添加</button>
-          <button class="btn-secondary btn-small" bindtap="toggleIconPicker">图标选择</button>
+        <view class="form-label label-collapsible" bindtap="toggleIconPicker">
+          食材标签
+          <text class="label-count" wx:if="{{dish.ingredients.length}}">{{dish.ingredients.length}} 已选</text>
+          <text class="label-arrow">{{showIconPicker ? '收起 ▲' : '展开 ▼'}}</text>
         </view>
 
         <!-- 食材图标快捷选择器 -->
         <view class="icon-picker" wx:if="{{showIconPicker}}">
+          <view class="ingredients-tip">点击下方图标选择/取消食材（可多选）</view>
           <scroll-view scroll-y="true" class="icon-picker-scroll">
             <view class="icon-grid">
               <view
