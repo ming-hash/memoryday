@@ -114,6 +114,18 @@
   gap: 14rpx;
 }
 
+.ingredient-tag {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.ingredient-icon {
+  width: 40rpx;
+  height: 40rpx;
+  flex-shrink: 0;
+}
+
 .action-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;

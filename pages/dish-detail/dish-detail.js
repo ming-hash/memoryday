@@ -1,6 +1,16 @@
 // pages/dish-detail/dish-detail.js
 const app = getApp()
 const imageUtils = require('../../utils/imageUtils')
+const { getIngredientIcon } = require('../../utils/ingredientIcons')
+
+// 为食材数组附加图标 URL（图床），无图标则留空字符串
+function buildIngredientsWithIcon(ingredients) {
+  if (!Array.isArray(ingredients)) return []
+  return ingredients.map(name => ({
+    name: name,
+    icon: getIngredientIcon(name)
+  }))
+}
 
 // 字段映射（与index.js保持一致）
 const DIFFICULTY_MAP = { easy: '简单', medium: '中等', hard: '困难', expert: '专家' }
@@ -88,7 +98,8 @@ Page({
 
       this.setData({
         dish: dish,
-        mealTimeLabels: mealTimeLabels
+        mealTimeLabels: mealTimeLabels,
+        ingredientsWithIcon: buildIngredientsWithIcon(dish.ingredients)
       })
     } catch (error) {
       console.error('加载菜品详情失败:', error)

@@ -52,11 +52,12 @@
     </view>
 
     <!-- 食材标签 -->
-    <view class="ingredients-section" wx:if="{{dish.ingredients.length > 0}}">
+    <view class="ingredients-section" wx:if="{{ingredientsWithIcon.length > 0}}">
       <view class="section-title">食材</view>
       <view class="ingredients-tags">
-        <view class="tag tag-primary" wx:for="{{dish.ingredients}}" wx:key="index">
-          {{item}}
+        <view class="tag tag-primary ingredient-tag" wx:for="{{ingredientsWithIcon}}" wx:key="index">
+          <image wx:if="{{item.icon}}" class="ingredient-icon" src="{{item.icon}}" mode="aspectFit" lazy-load="true"></image>
+          <text>{{item.name}}</text>
         </view>
       </view>
     </view>

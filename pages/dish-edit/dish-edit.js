@@ -1,6 +1,7 @@
 // pages/dish-edit/dish-edit.js
 const app = getApp()
 const getCosService = require('../../services/cosService')
+const { getIngredientIcon, ICON_FILE_MAP } = require('../../utils/ingredientIcons')
 
 // 难度映射：前端显示 <-> 后端API值
 const DIFFICULTY_MAP = {
@@ -72,7 +73,11 @@ Page({
       { label: '午餐', value: 'lunch' },
       { label: '晚餐', value: 'dinner' },
       { label: '加餐', value: 'snack' }
-    ]
+    ],
+
+    // 食材图标快捷选择器候选列表（图床）
+    iconIngredients: [],
+    showIconPicker: false
   },
 
   onLoad(options) {
@@ -89,6 +94,13 @@ Page({
     wx.setNavigationBarTitle({
       title: mode === 'edit' ? '编辑菜品' : '添加菜品'
     })
+
+    // 构建食材图标快捷选择器候选（按文件名）并缓存标准食材名
+    const iconIngredients = Object.keys(ICON_FILE_MAP).map(file => ({
+      name: file,
+      icon: getIngredientIcon(file)
+    }))
+    this.setData({ iconIngredients })
   },
 
   // 加载要编辑的菜品 - 调用后端API
@@ -321,6 +333,25 @@ Page({
     const index = e.currentTarget.dataset.index
     const ingredients = [...this.data.dish.ingredients]
     ingredients.splice(index, 1)
+    this.setData({ 'dish.ingredients': ingredients })
+  },
+
+  // 展开/收起食材图标快捷选择器
+  toggleIconPicker() {
+    this.setData({ showIconPicker: !this.data.showIconPicker })
+  },
+
+  // 点击图标快捷添加/移除（复用现有 ingredients 数组）
+  toggleIconIngredient(e) {
+    const name = e.currentTarget.dataset.name
+    if (!name) return
+    const ingredients = [...this.data.dish.ingredients]
+    const index = ingredients.indexOf(name)
+    if (index > -1) {
+      ingredients.splice(index, 1)
+    } else {
+      ingredients.push(name)
+    }
     this.setData({ 'dish.ingredients': ingredients })
   },
 

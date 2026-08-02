@@ -53,7 +53,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.31.0",
-  "appid": "your-wechat-appid",
+  "appid": "wxbe5cb0f551d030e5",
   "projectname": "今日吃啥",
   "isGameTourist": false,
   "simulatorType": "wechat",

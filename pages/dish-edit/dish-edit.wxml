@@ -129,7 +129,27 @@
             bindconfirm="addIngredient"
           />
           <button class="btn-secondary btn-small" bindtap="addIngredient">添加</button>
+          <button class="btn-secondary btn-small" bindtap="toggleIconPicker">图标选择</button>
         </view>
+
+        <!-- 食材图标快捷选择器 -->
+        <view class="icon-picker" wx:if="{{showIconPicker}}">
+          <scroll-view scroll-y="true" class="icon-picker-scroll">
+            <view class="icon-grid">
+              <view
+                wx:for="{{iconIngredients}}"
+                wx:key="name"
+                class="icon-cell {{helpers.includes(dish.ingredients, item.name) ? 'active' : ''}}"
+                bindtap="toggleIconIngredient"
+                data-name="{{item.name}}"
+              >
+                <image wx:if="{{item.icon}}" class="icon-cell-img" src="{{item.icon}}" mode="aspectFit" lazy-load="true"></image>
+                <text class="icon-cell-name">{{item.name}}</text>
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+
         <view class="ingredients-tags">
           <view 
             wx:for="{{dish.ingredients}}" 
