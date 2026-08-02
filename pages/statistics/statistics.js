@@ -83,7 +83,8 @@ Page({
         time: mealTimeLabels[key],
         count: 0,
         percentage: 0,
-        color: mealTimeColors[index]
+        color: mealTimeColors[index],
+        colorClass: `mt-color-${index}`
       }))
 
       this.setData({

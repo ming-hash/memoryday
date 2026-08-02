@@ -4,7 +4,7 @@
   <view class="user-info card">
     <view class="user-avatar">
       <image wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}" class="avatar"></image>
-      <view wx:else class="avatar-default"><text class="avatar-default-text">U</text></view>
+      <view wx:else class="avatar-default"><image class="avatar-default-img" src="/images/user.png" mode="aspectFit"></image></view>
     </view>
     <view class="user-details">
       <view class="user-name">{{userInfo.nickName || '微信用户'}}</view>
@@ -20,7 +20,6 @@
   <view class="menu-section">
     <view class="menu-item" bindtap="navigateTo" data-url="/pages/statistics/statistics">
       <view class="menu-left">
-        <view class="menu-icon-box"><text class="menu-icon-text">S</text></view>
         <text class="menu-text">饮食统计</text>
       </view>
       <text class="menu-arrow">›</text>
@@ -28,7 +27,6 @@
 
     <view class="menu-item" bindtap="navigateTo" data-url="/pages/settings/settings">
       <view class="menu-left">
-        <view class="menu-icon-box"><text class="menu-icon-text">G</text></view>
         <text class="menu-text">设置</text>
       </view>
       <text class="menu-arrow">›</text>
@@ -38,17 +36,14 @@
   <!-- 快捷操作 -->
   <view class="quick-actions">
     <view class="action-btn" bindtap="clearCache">
-      <view class="action-icon-box"><text class="action-icon-text">C</text></view>
       <text class="action-text">清除缓存</text>
     </view>
 
     <view class="action-btn" bindtap="contactSupport">
-      <view class="action-icon-box"><text class="action-icon-text">F</text></view>
       <text class="action-text">联系支持</text>
     </view>
 
     <view class="action-btn" bindtap="shareApp">
-      <view class="action-icon-box"><text class="action-icon-text">S</text></view>
       <text class="action-text">分享小程序</text>
     </view>
   </view>

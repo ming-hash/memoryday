@@ -17,11 +17,9 @@
   box-shadow: var(--shadow-warm);
 }
 
-.login-icon-text {
-  font-size: 56rpx;
-  font-weight: 700;
-  color: #fff;
-  font-family: Georgia, 'Times New Roman', serif;
+.login-icon-img {
+  width: 60rpx;
+  height: 60rpx;
 }
 
 .login-text {
@@ -273,11 +271,9 @@
   box-shadow: var(--shadow-warm);
 }
 
-.empty-icon-text {
-  font-size: 56rpx;
-  font-weight: 700;
-  color: #fff;
-  font-family: Georgia, 'Times New Roman', serif;
+.empty-icon-img {
+  width: 64rpx;
+  height: 64rpx;
 }
 
 .empty-text {
@@ -303,6 +299,12 @@
   font-size: var(--font-size-xs);
   margin-left: 8rpx;
 }
+
+/* 用餐场景进度条颜色（对应 mealTimeColors 顺序） */
+.mt-color-0 { background: #FF9F1C; }
+.mt-color-1 { background: #2EC4B6; }
+.mt-color-2 { background: #E71D36; }
+.mt-color-3 { background: #F9C80E; }
 
 /* 响应式调整 */
 @media (min-width: 768px) {

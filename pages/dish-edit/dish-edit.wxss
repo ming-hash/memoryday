@@ -126,10 +126,14 @@
   font-size: var(--font-size-base);
   background: #FDFBF9;
   width: 100%;
-  height: 88rpx;
   box-sizing: border-box;
   color: var(--color-text-primary);
   transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.form-input {
+  min-height: 88rpx;
+  line-height: 48rpx;
 }
 
 .form-input:focus,
@@ -238,6 +242,54 @@
   padding: 20rpx;
 }
 
+/* 食材搜索框 */
+.icon-search-wrap {
+  display: flex;
+  align-items: center;
+  border: 2rpx solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+  padding: 0 20rpx;
+  margin-bottom: 16rpx;
+  transition: border-color 0.2s ease;
+}
+
+.icon-search-wrap:focus-within {
+  border-color: var(--color-primary);
+}
+
+.icon-search-icon {
+  font-size: 28rpx;
+  margin-right: 12rpx;
+  opacity: 0.6;
+}
+
+.icon-search {
+  flex: 1;
+  height: 76rpx;
+  line-height: 76rpx;
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: transparent;
+}
+
+.icon-search-placeholder {
+  color: var(--color-text-placeholder);
+}
+
+.icon-search-clear {
+  font-size: 28rpx;
+  color: var(--color-text-placeholder);
+  padding: 8rpx 8rpx 8rpx 16rpx;
+}
+
+.icon-empty {
+  text-align: center;
+  font-size: var(--font-size-base);
+  color: var(--color-text-placeholder);
+  padding: 60rpx 0;
+}
+
 .icon-picker-scroll {
   max-height: 460rpx;
 }
@@ -317,11 +369,14 @@
 /* 星级评分 */
 .star-rating {
   display: flex;
+  align-items: center;
   gap: 14rpx;
+  margin-top: 8rpx;
 }
 
 .star {
   font-size: 40rpx;
+  line-height: 1;
   color: var(--color-divider);
   cursor: pointer;
   transition: color 0.15s ease, transform 0.15s ease;

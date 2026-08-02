@@ -165,6 +165,39 @@ globalData: {
 
 > **建议**：后续可优化为统一从 `config/config.js` 或 `app.globalData` 读取 API 地址，避免多处硬编码。
 
+### 2.4 菜品图片上传压缩配置（方案 A：小程序端智能压缩）
+
+为降低云存储 / CDN 流量费用，菜品图片在上传前会在**小程序端**做「尺寸 + 质量」双控压缩，肉眼无损，体积下降约 60%~90%。
+
+**实现位置**
+- 压缩工具：`utils/imageCompress.js`
+- 调用链路：`pages/dish-edit/dish-edit.js`
+  - `chooseImage`：`sizeType` 改为 `['original']`，选择后先 `compressImages` 再上传（去掉系统不可控的 `['compressed']`）
+  - `uploadImagesToCos`：循环内对每张图做兜底 `compressImage`，确保保存时触发的上传也被压缩
+
+**可调参数**（位于 `utils/imageCompress.js` 顶部）
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `MAX_SIDE` | `1280` | 长边最大像素。手机展示已足够清晰；如需更高清可放宽到 `1600` |
+| `QUALITY` | `0.82` | 导出 JPEG 质量（0~1）。人眼几乎无差异；可微调到 `0.80`~`0.85` |
+
+**压缩逻辑**
+- 长边 ≤ `MAX_SIDE` 时直接返回原图，跳过压缩（已足够小的不重复处理）
+- 长边超限时按等比缩放，用 `wx.createOffscreenCanvas` + `wx.canvasToTempFilePath` 导出 JPEG
+- 任意一步失败（老基础库不支持 `OffscreenCanvas`、解码失败等）**自动回退原图**，保证用户始终能上传
+
+**兼容性说明**
+- `OffscreenCanvas` 需基础库 **2.7.0+**（当前主流版本均支持）
+- 不支持时自动回退原图，不会阻断上传，但此时无法享受压缩带来的费用下降
+
+**调整示例**
+```javascript
+// utils/imageCompress.js
+const MAX_SIDE = 1600 // 改为更高清
+const QUALITY = 0.85  // 轻微提升质量
+```
+
 ---
 
 ## 三、使用 Docker 部署后端
@@ -212,6 +245,13 @@ print('测试用户创建成功')
 | 5 | `utils/deployment.js` | `apiUrl` | ⚠️ 必填 |
 | 6 | `pages/deployment/deployment.js` | `apiUrl` | ⚠️ 必填 |
 | 7 | `services/cosService.js` | `baseUrl` 后备地址 | ⚠️ 必填 |
+
+### 前端图片压缩配置（可选调整）
+
+| # | 文件 | 配置项 | 状态 |
+|---|------|--------|------|
+| 8 | `utils/imageCompress.js` | `MAX_SIDE`（长边上限，默认 1280） | 按需调整 |
+| 9 | `utils/imageCompress.js` | `QUALITY`（JPEG 质量，默认 0.82） | 按需调整 |
 
 ### 可选配置项
 

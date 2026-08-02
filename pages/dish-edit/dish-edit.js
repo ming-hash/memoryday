@@ -2,6 +2,7 @@
 const app = getApp()
 const getCosService = require('../../services/cosService')
 const { getIngredientIcon, ICON_FILE_MAP } = require('../../utils/ingredientIcons')
+const { compressImage, compressImages } = require('../../utils/imageCompress')
 
 // 难度映射：前端显示 <-> 后端API值
 const DIFFICULTY_MAP = {
@@ -76,7 +77,9 @@ Page({
 
     // 食材图标快捷选择器候选列表（图床）
     iconIngredients: [],
-    showIconPicker: false
+    showIconPicker: false,
+    iconSearchKeyword: '',
+    filteredIconIngredients: []
   },
 
   onLoad(options) {
@@ -99,7 +102,22 @@ Page({
       name: file,
       icon: getIngredientIcon(file)
     }))
-    this.setData({ iconIngredients })
+    this.setData({ iconIngredients, filteredIconIngredients: iconIngredients })
+  },
+
+  // 食材搜索输入：按名称实时过滤图标选择器候选
+  onIconSearchInput(e) {
+    const keyword = (e.detail.value || '').trim().toLowerCase()
+    const { iconIngredients } = this.data
+    const filteredIconIngredients = keyword
+      ? iconIngredients.filter(item => item.name.toLowerCase().includes(keyword))
+      : iconIngredients
+    this.setData({ iconSearchKeyword: keyword, filteredIconIngredients })
+  },
+
+  // 清空食材搜索关键字
+  clearIconSearch() {
+    this.setData({ iconSearchKeyword: '', filteredIconIngredients: this.data.iconIngredients })
   },
 
   // 加载要编辑的菜品 - 调用后端API
@@ -159,10 +177,21 @@ Page({
     try {
       wx.chooseImage({
         count: 3 - this.data.dish.images.length,
-        sizeType: ['compressed'],
+        // 用 original + 自定义压缩，完全掌控质量与尺寸，避免系统 compressed 不可控
+        sizeType: ['original'],
         sourceType: ['album', 'camera'],
         success: async (res) => {
-          await this.uploadImagesToCos(res.tempFilePaths)
+          wx.showLoading({ title: '处理中...', mask: true })
+          try {
+            // 上传前智能压缩（长边≤1280px / JPEG 82%），肉眼无损且省流量
+            const compressedPaths = await compressImages(res.tempFilePaths)
+            await this.uploadImagesToCos(compressedPaths)
+          } catch (err) {
+            console.error('压缩或上传失败:', err)
+            app.showErrorToast('图片处理失败，请重试')
+          } finally {
+            wx.hideLoading()
+          }
         },
         fail: (err) => {
           console.error('选择图片失败:', err)
@@ -194,16 +223,18 @@ Page({
       
       for (const filePath of tempFilePaths) {
         try {
-          const sizeValidation = await cosService.validateFileSize(filePath)
+          // 兜底压缩：确保进入 COS 前已压缩（chooseImage 已压，saveDish 路径也覆盖）
+          const compressedPath = await compressImage(filePath)
+          const sizeValidation = await cosService.validateFileSize(compressedPath)
           if (!sizeValidation.valid) {
             throw new Error(sizeValidation.error)
           }
           
-          if (!cosService.validateFileType(filePath)) {
+          if (!cosService.validateFileType(compressedPath)) {
             throw new Error('不支持的文件格式')
           }
           
-          const result = await cosService.uploadImage(filePath, null, 'dish_images')
+          const result = await cosService.uploadImage(compressedPath, null, 'dish_images')
           uploadResults.push(result)
         } catch (error) {
           console.error('单张图片上传失败:', error)

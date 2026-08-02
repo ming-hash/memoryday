@@ -10,7 +10,7 @@
     <view class="search-bar">
       <view class="search-input">
         <view class="search-icon-box">
-          <text class="search-icon-text">S</text>
+          <image class="search-icon-img" src="/images/home.png" mode="aspectFit"></image>
         </view>
         <input 
           placeholder="搜索菜名或食材" 
@@ -68,7 +68,7 @@
 
     <!-- 空状态 -->
     <view wx:if="{{filteredDishes.length === 0 && !isLoading}}" class="empty-state">
-      <view class="empty-icon-circle">
+      <view class="empty-icon-circle" bindtap="addDish">
         <text class="empty-icon-text">+</text>
       </view>
       <view class="empty-text">暂无菜品</view>

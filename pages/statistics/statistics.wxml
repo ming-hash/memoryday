@@ -2,7 +2,7 @@
 <view class="container">
   <!-- 未登录提示 -->
   <view wx:if="{{needLogin}}" class="login-prompt card">
-    <view class="login-icon-box"><text class="login-icon-text">S</text></view>
+    <view class="login-icon-box"><image class="login-icon-img" src="/images/stats.png" mode="aspectFit"></image></view>
     <view class="login-text">请先登录查看统计数据</view>
     <button class="login-btn" bindtap="goToLogin">去登录</button>
   </view>
@@ -43,7 +43,7 @@
       </block>
       
       <view wx:if="{{stats.topDishes.length === 0}}" class="empty-state">
-        <view class="empty-icon-box"><text class="empty-icon-text">S</text></view>
+        <view class="empty-icon-box"><image class="empty-icon-img" src="/images/home-active.png" mode="aspectFit"></image></view>
         <view class="empty-text">暂无本周用餐记录</view>
       </view>
     </view>
@@ -75,8 +75,8 @@
           <view class="meal-time-label">{{item.time}}</view>
           <view class="progress-bar">
             <view 
-              class="progress-fill" 
-              style="width: {{item.percentage}}%; background-color: {{item.color}};"
+              class="progress-fill {{item.colorClass}}" 
+              style="width: {{item.percentage}}%"
             ></view>
           </view>
           <view class="meal-time-value">{{item.count}}次 ({{item.percentage}}%)</view>

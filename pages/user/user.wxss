@@ -35,11 +35,9 @@
   box-shadow: var(--shadow-md);
 }
 
-.avatar-default-text {
-  font-size: 52rpx;
-  font-weight: 700;
-  color: #fff;
-  font-family: Georgia, 'Times New Roman', serif;
+.avatar-default-img {
+  width: 72rpx;
+  height: 72rpx;
 }
 
 .user-details {
@@ -93,33 +91,6 @@
   align-items: center;
 }
 
-.menu-icon {
-  font-size: 38rpx;
-  margin-right: 20rpx;
-  opacity: 0.65;
-  display: flex;
-  align-items: center;
-}
-
-.menu-icon-box {
-  width: 54rpx;
-  height: 54rpx;
-  border-radius: 50%;
-  background: var(--color-primary-gradient);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 20rpx;
-  opacity: 0.85;
-}
-
-.menu-icon-text {
-  font-size: 24rpx;
-  font-weight: 700;
-  color: #fff;
-  font-family: Georgia, 'Times New Roman', serif;
-}
-
 .menu-text {
   font-size: var(--font-size-lg);
   color: var(--color-text-primary);
@@ -156,31 +127,6 @@
   background: #F5EDE8;
   border-color: var(--color-primary-light);
   transform: scale(0.98);
-}
-
-.action-icon {
-  font-size: 48rpx;
-  margin-bottom: 16rpx;
-  opacity: 0.6;
-}
-
-.action-icon-box {
-  width: 64rpx;
-  height: 64rpx;
-  border-radius: 50%;
-  background: var(--color-primary-gradient);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16rpx;
-  box-shadow: var(--shadow-sm);
-}
-
-.action-icon-text {
-  font-size: 28rpx;
-  font-weight: 700;
-  color: #fff;
-  font-family: Georgia, 'Times New Roman', serif;
 }
 
 .action-text {

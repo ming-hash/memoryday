@@ -38,11 +38,9 @@
   box-shadow: var(--shadow-sm);
 }
 
-.avatar-default-text {
-  font-size: 48rpx;
-  font-weight: 700;
-  color: #fff;
-  font-family: Georgia, 'Times New Roman', serif;
+.avatar-default-img {
+  width: 68rpx;
+  height: 68rpx;
 }
 
 .user-info {
@@ -105,21 +103,6 @@
 
 .settings-item:active {
   background: #F5EDE8;
-}
-
-.item-icon {
-  font-size: 36rpx;
-  margin-right: 20rpx;
-  width: 40rpx;
-  height: 40rpx;
-  text-align: center;
-  line-height: 40rpx;
-  color: var(--color-primary);
-  background: #FAEEE8;
-  border-radius: 50%;
-  font-weight: 700;
-  font-family: Georgia, 'Times New Roman', serif;
-  flex-shrink: 0;
 }
 
 .item-label {

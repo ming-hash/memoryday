@@ -84,7 +84,17 @@ Page({
   // 导航到页面
   navigateTo(e) {
     const url = e.currentTarget.dataset.url
-    wx.navigateTo({ url })
+    // tabBar 页面需用 switchTab 打开，navigateTo 对其无效且无报错
+    const tabBarPages = [
+      '/pages/index/index',
+      '/pages/statistics/statistics',
+      '/pages/user/user'
+    ]
+    if (tabBarPages.indexOf(url) !== -1) {
+      wx.switchTab({ url })
+    } else {
+      wx.navigateTo({ url })
+    }
   },
 
   // 清除缓存

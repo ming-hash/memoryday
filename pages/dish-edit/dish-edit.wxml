@@ -127,11 +127,23 @@
 
         <!-- 食材图标快捷选择器 -->
         <view class="icon-picker" wx:if="{{showIconPicker}}">
+          <view class="icon-search-wrap">
+            <text class="icon-search-icon">🔍</text>
+            <input
+              class="icon-search"
+              value="{{iconSearchKeyword}}"
+              placeholder="搜索食材名称…"
+              placeholder-class="icon-search-placeholder"
+              bindinput="onIconSearchInput"
+              confirm-type="search"
+            />
+            <text wx:if="{{iconSearchKeyword}}" class="icon-search-clear" bindtap="clearIconSearch">✕</text>
+          </view>
           <view class="ingredients-tip">点击下方图标选择/取消食材（可多选）</view>
           <scroll-view scroll-y="true" class="icon-picker-scroll">
-            <view class="icon-grid">
+            <view class="icon-grid" wx:if="{{filteredIconIngredients.length}}">
               <view
-                wx:for="{{iconIngredients}}"
+                wx:for="{{filteredIconIngredients}}"
                 wx:key="name"
                 class="icon-cell {{helpers.includes(dish.ingredients, item.name) ? 'active' : ''}}"
                 bindtap="toggleIconIngredient"
@@ -141,6 +153,7 @@
                 <text class="icon-cell-name">{{item.name}}</text>
               </view>
             </view>
+            <view wx:else class="icon-empty">未找到相关食材</view>
           </scroll-view>
         </view>
 
@@ -159,7 +172,7 @@
       </view>
 
       <view class="form-group">
-        <view class="form-label">喜爱程度</view>
+        <view class="form-label" style="margin-bottom: 0;">喜爱程度</view>
         <view class="star-rating">
           <text 
             wx:for="{{[1,2,3,4,5]}}" 
